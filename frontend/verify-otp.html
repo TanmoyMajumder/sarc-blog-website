@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verify OTP | SARC Portal</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-50 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-2 text-center">Verify Email</h1>
+    <p class="text-sm text-gray-500 mb-6 text-center">
+      Enter the OTP sent to your email
+    </p>
+
+    <p id="otp-error" class="text-red-500 text-sm mb-4"></p>
+
+    <form onsubmit="verifyOTP(event)">
+      <input
+        id="otp"
+        type="text"
+        maxlength="6"
+        placeholder="Enter 6-digit OTP"
+        class="w-full border rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
+        required
+      />
+
+      <button
+        type="submit"
+        class="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600"
+      >
+        Verify OTP
+      </button>
+    </form>
+  </div>
+
+<script>
+const email = localStorage.getItem("pendingEmail");
+
+if (!email) {
+  window.location.href = "register.html";
+}
+
+async function verifyOTP(e) {
+  e.preventDefault();
+
+  const otp = document.getElementById("otp").value;
+  const errorEl = document.getElementById("otp-error");
+
+  errorEl.textContent = "";
+
+  try {
+    const res = await fetch("http://localhost:5000/api/v1/auth/verify-otp", {
+      method: "POST",
+        credentials: "include",   //  REQUIRED FOR JWT COOKIE
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, otp })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      errorEl.textContent = data.message;
+      return;
+    }
+
+    localStorage.removeItem("pendingEmail");
+window.location.href = "app.html";
+
+  } catch (err) {
+    errorEl.textContent = "Something went wrong";
+  }
+}
+</script>
+
+</body>
+</html>

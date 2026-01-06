@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NITA Blog | Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 1.2s ease-out forwards; }
+        .delay-200 { animation-delay: 0.2s; }
+    </style>
+</head>
+<body class="bg-white font-sans text-slate-800 antialiased overflow-x-hidden">
+
+    <div class="absolute top-[-50px] right-[-10%] w-[60%] h-[700px] bg-blue-50/60 rounded-full blur-3xl -z-10 animate-fade-in"></div>
+
+    <header class="max-w-7xl mx-auto px-6 py-8 flex justify-between items-start relative z-10 animate-fade-in">
+        <div class="flex gap-4 group cursor-pointer">
+            <img src="assets/logo1.jpeg" alt="SARC Logo" class="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105">
+            <img src="assets/logo 2.jpeg" alt="NIT Agartala Logo" class="h-16 md:h-20 w-auto object-contain transition-transform group-hover:scale-105">
+        </div>
+        <div class="flex items-center gap-4 md:gap-6">
+            <a href="register.html" class="text-[#C5A059] font-medium text-sm md:text-base hover:text-[#a8864a] transition-colors">Sign-up</a>
+            <a href="login.html" class="border border-[#C5A059] text-[#C5A059] px-4 md:px-6 py-1.5 rounded-full hover:bg-[#C5A059] hover:text-white transition-all duration-300 text-sm md:text-base">Log in</a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pt-8 pb-24 relative">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <div class="lg:col-span-7 animate-fade-up">
+                <h1 class="text-5xl md:text-6xl font-bold text-[#333333] leading-tight mb-12">
+                    Welcome to our Blog<br>Page
+                </h1>
+
+                <div class="relative border border-[#C5A059]/40 rounded-3xl p-8 md:p-10 pt-12 max-w-2xl bg-white/50 backdrop-blur-sm">
+                    <span class="absolute -top-4 left-8 bg-white px-4 py-1 border border-[#C5A059] rounded-full text-[#002147] font-bold text-lg shadow-sm">
+                        Contents
+                    </span>
+                    
+                    <div class="grid grid-cols-4 text-center gap-2 md:gap-4">
+                        <div class="flex flex-col items-center gap-3 cursor-pointer group">
+                            <div class="p-3 border border-slate-200 rounded-xl group-hover:border-[#C5A059] group-hover:bg-slate-50 transition-all duration-300">
+                                <i class="fa-regular fa-pen-to-square text-xl md:text-2xl text-slate-600 group-hover:text-[#C5A059]"></i>
+                            </div>
+                            <span class="text-slate-600 font-medium text-xs md:text-sm">Blogs</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 cursor-pointer group">
+                            <div class="p-3 border border-slate-200 rounded-xl group-hover:border-[#C5A059] group-hover:bg-slate-50 transition-all duration-300">
+                                <i class="fa-solid fa-align-left text-xl md:text-2xl text-slate-600 group-hover:text-[#C5A059]"></i>
+                            </div>
+                            <span class="text-slate-600 font-medium text-xs md:text-sm">Articles</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 cursor-pointer group">
+                            <div class="p-3 border border-slate-200 rounded-xl group-hover:border-[#C5A059] group-hover:bg-slate-50 transition-all duration-300">
+                                <i class="fa-regular fa-image text-xl md:text-2xl text-slate-600 group-hover:text-[#C5A059]"></i>
+                            </div>
+                            <span class="text-slate-600 font-medium text-xs md:text-sm">Gallery</span>
+                        </div>
+                        <div class="flex flex-col items-center gap-3 cursor-pointer group">
+                            <div class="p-3 border border-slate-200 rounded-xl group-hover:border-[#C5A059] group-hover:bg-slate-50 transition-all duration-300">
+                                <i class="fa-solid fa-user-graduate text-xl md:text-2xl text-slate-600 group-hover:text-[#C5A059]"></i>
+                            </div>
+                            <span class="text-slate-600 font-medium text-xs md:text-sm">Alumni</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-20">
+                    <h2 class="text-3xl font-bold text-[#333333] mb-8 border-l-4 border-[#C5A059] pl-4">Latest</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-50/80 backdrop-blur-sm h-32 rounded-3xl flex items-center p-4 shadow-sm border border-slate-100 hover:shadow-md transition-shadow cursor-pointer">
+                             <div class="w-24 h-24 bg-slate-200 rounded-2xl flex-shrink-0"></div>
+                             <div class="ml-4 space-y-2 w-full">
+                                 <div class="h-3 bg-slate-300 rounded w-3/4"></div>
+                                 <div class="h-3 bg-slate-300 rounded w-1/2"></div>
+                             </div>
+                        </div>
+                        <div class="bg-slate-50/80 backdrop-blur-sm h-32 rounded-3xl flex items-center p-4 shadow-sm border border-slate-100 hover:shadow-md transition-shadow cursor-pointer">
+                             <div class="w-24 h-24 bg-slate-200 rounded-2xl flex-shrink-0"></div>
+                             <div class="ml-4 space-y-2 w-full">
+                                 <div class="h-3 bg-slate-300 rounded w-3/4"></div>
+                                 <div class="h-3 bg-slate-300 rounded w-1/2"></div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col items-end text-right pt-10 lg:pt-20 animate-fade-up delay-200">
+                <h3 class="text-4xl font-extrabold text-[#002147] mb-6">Inside NITA</h3>
+                <p class="italic text-slate-500 text-xl mb-8 font-light">
+                    Built by the community,<br>for the community...
+                </p>
+                <p class="text-slate-600 text-lg leading-relaxed max-w-sm mb-12">
+                    Your window into the life, culture, and stories of National Institute of Technology Agartala
+                </p>
+                <div class="space-y-4">
+                    <p class="italic text-slate-500 text-lg">Want to contribute or have<br>something to share?</p>
+                    <a href="register.html" class="inline-block border border-[#C5A059] text-[#C5A059] px-10 py-2.5 rounded-full font-medium hover:bg-[#C5A059] hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-[#C5A059]/20">Join Us</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-[#1B2129] text-white py-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-slate-400 text-sm order-2 md:order-1 font-light italic">
+                © 2025 SARC NIT Agartala | Made and maintained by SARC Tech Team
+            </div>
+            <div class="flex gap-8 text-xl text-slate-400 order-1 md:order-2">
+                <a href="#" class="hover:text-[#C5A059] transition-all"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="hover:text-[#C5A059] transition-all"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-[#C5A059] transition-all"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

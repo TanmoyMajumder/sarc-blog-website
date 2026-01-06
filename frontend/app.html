@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SARC Portal | Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:#f8f9fb;
+}
+
+/* NAVBAR */
+.nav-link{
+  display:flex;
+  align-items:center;
+  height:80px;
+  padding:0 6px;
+  font-weight:500;
+  color:#6b7280;
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+}
+.nav-link:hover,
+.nav-link.active{
+  color:#22c55e;
+  border-bottom-color:#22c55e;
+}
+
+/* SIDEBAR */
+.sidebar-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 24px;
+  cursor:pointer;
+  color:#374151;
+}
+.sidebar-item:hover{background:#f3f4f6;}
+.sidebar-active{
+  background:#f0fdf4;
+  border-right:3px solid #22c55e;
+  color:#16a34a;
+}
+
+/* CARD */
+.card{
+  background:white;
+  border-radius:14px;
+  padding:24px;
+  box-shadow:0 10px 25px -5px rgba(0,0,0,0.04);
+}
+
+/* MOBILE SIDEBAR */
+#mobileSidebar{transition:transform .3s ease;}
+@media(max-width:1023px){
+  #mobileSidebar{
+    position:fixed;
+    top:80px;
+    left:0;
+    height:calc(100vh - 80px);
+    transform:translateX(-100%);
+    z-index:40;
+  }
+  #mobileSidebar.open{transform:translateX(0);}
+}
+@media(min-width:1024px){
+  #mobileSidebar{
+    transform:translateX(0)!important;
+    position:static;
+  }
+}
+
+/* BACKDROP */
+#backdrop{display:none;}
+#backdrop.show{display:block;}
+
+/* 🌙 DARK MODE */
+.dark body{background:#0f172a;}
+.dark nav,.dark aside{background:#020617;border-color:#020617;}
+.dark .sidebar-item{color:#e5e7eb;}
+.dark .sidebar-item:hover{background:#020617;}
+.dark .sidebar-active{background:#022c22;color:#22c55e;}
+.dark .card{background:#020617;border:1px solid #1e293b;}
+.dark h1,.dark h2,.dark h3,.dark p,.dark span{color:#e5e7eb;}
+.dark .text-gray-400{color:#9ca3af;}
+.dark .bg-gray-100{background:#020617;}
+
+/* DARK ICON FIX */
+.dark i,
+.dark svg{
+  color:#e5e7eb !important;
+  stroke:#e5e7eb !important;
+}
+
+/* DROPDOWN */
+.dropdown{
+  background:white;
+}
+.dark .dropdown{
+  background:#020617;
+  border-color:#1e293b;
+}
+.logout-btn{
+  color:#ef4444;
+}
+/* 🔥 FIX PROFILE ICON + LOGOUT VISIBILITY IN DARK MODE */
+
+/* Profile circle */
+.dark .bg-gray-100{
+  background:#1e293b !important; /* visible dark gray */
+}
+
+/* Profile letter */
+.dark .bg-gray-100,
+.dark .bg-gray-100 span{
+  color:#e5e7eb !important;
+}
+
+/* Logout text */
+.dark .logout-btn{
+  color:#ffffff !important;
+}
+
+/* Logout icon */
+.dark .logout-btn i,
+.dark .logout-btn svg{
+  color:#ffffff !important;
+  stroke:#ffffff !important;
+}
+/* 🔥 GUARANTEED FIX: PROFILE ICON IN DARK MODE */
+
+.dark .profile-avatar{
+  background:#1e293b !important;   /* visible background */
+  color:#ffffff !important;        /* visible letter */
+}
+/* ✅ FIX: My Profile text not visible in dark mode */
+.dark .dropdown div{
+  color:#e5e7eb !important;   /* light text */
+}
+
+/* hover stays readable */
+.dark .dropdown div:hover{
+  background:#020617;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<!-- BACKDROP -->
+<div id="backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-30 lg:hidden"></div>
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 w-full h-20 bg-white border-b flex items-center justify-between px-5 z-50">
+
+  <div class="flex items-center gap-3">
+    <button onclick="toggleSidebar()" class="lg:hidden p-2">
+      <i data-lucide="menu"></i>
+    </button>
+    <img src="assets/logo 2.jpeg" class="w-9 h-9 object-contain">
+    <span class="text-lg font-bold">SARC Portal</span>
+  </div>
+
+ <ul class="hidden lg:flex items-center gap-8">
+
+  <li class="nav-link active flex items-center gap-2" onclick="navigate('home',this)">
+    <i data-lucide="home" class="w-4 h-4"></i>
+    <span>Home</span>
+  </li>
+
+  <li class="nav-link flex items-center gap-2" onclick="navigate('blogs',this)">
+    <i data-lucide="book-open" class="w-4 h-4"></i>
+    <span>Blogs</span>
+  </li>
+
+  <li class="nav-link flex items-center gap-2" onclick="navigate('articles',this)">
+    <i data-lucide="file-text" class="w-4 h-4"></i>
+    <span>Articles</span>
+  </li>
+
+  <li class="nav-link flex items-center gap-2" onclick="navigate('alumni',this)">
+    <i data-lucide="users" class="w-4 h-4"></i>
+    <span>Alumni</span>
+  </li>
+
+  <li class="nav-link flex items-center gap-2" onclick="navigate('gallery',this)">
+    <i data-lucide="image" class="w-4 h-4"></i>
+    <span>Gallery</span>
+  </li>
+
+</ul>
+
+  <div class="flex items-center gap-4 relative">
+    <button onclick="toggleTheme()" class="p-2">
+      <i data-lucide="moon"></i>
+    </button>
+
+    <div class="relative group">
+<div id="profileAvatar" class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center font-bold cursor-pointer"></div>
+
+</div>
+
+
+      <div class="absolute right-0 mt-2 w-44 border rounded-lg shadow dropdown hidden group-hover:block">
+  
+  <!-- ✅ ADD THIS LINE -->
+  <div id="profileName" class="px-4 py-2 text-sm font-semibold border-b"></div>
+
+
+  <div class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-[#020617]">
+    My Profile
+  </div>
+
+  <div class="px-4 py-2 text-sm logout-btn cursor-pointer hover:bg-gray-100 dark:hover:bg-[#020617]"
+     onclick="logout()">
+  Logout
+</div>
+
+</div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="flex pt-20 min-h-screen">
+
+<!-- SIDEBAR -->
+<aside id="mobileSidebar" class="w-72 bg-white border-r">
+  <div class="sidebar-item sidebar-active" onclick="navigate('home')"><i data-lucide="layout-grid"></i> Home</div>
+  <div class="sidebar-item" onclick="navigate('blogs')"><i data-lucide="book-open"></i> Blogs</div>
+  <div class="sidebar-item" onclick="navigate('articles')"><i data-lucide="file-text"></i> Articles</div>
+  <div class="sidebar-item" onclick="navigate('alumni')"><i data-lucide="users"></i> Alumni</div>
+  <div class="sidebar-item" onclick="navigate('gallery')"><i data-lucide="image"></i> Gallery</div>
+
+  <hr class="my-2">
+
+  <div class="sidebar-item"><i data-lucide="plus-circle"></i> Create Post</div>
+  <div class="sidebar-item"><i data-lucide="bookmark"></i> Saved Posts</div>
+  <div class="sidebar-item"><i data-lucide="file-check"></i> My Posts</div>
+  <div class="sidebar-item"><i data-lucide="user"></i> My Profile</div>
+  <div class="sidebar-item"><i data-lucide="settings"></i> Settings</div>
+<div class="sidebar-item logout-btn" onclick="logout()">
+  <i data-lucide="log-out"></i> Logout
+</div>
+</aside>
+
+<!-- MAIN -->
+<main class="flex-1 p-6">
+  <h1 id="pageTitle" class="text-3xl font-bold mb-6">Dashboard Overview</h1>
+  <div id="pageContent"></div>
+</main>
+
+</div>
+
+<script type="module">
+import { apiFetch } from "./js/api.js";
+
+async function loadLoggedInUser() {
+  try {
+    const res = await apiFetch("/api/v1/auth/me");
+    console.log("🟢 /me response:", res);
+
+    const name = res.user.name;
+
+    console.log("🟡 Setting UI name:", name);
+
+    const avatar = document.getElementById("profileAvatar");
+    const profileName = document.getElementById("profileName");
+
+    avatar.textContent = "";
+    profileName.textContent = "";
+
+    avatar.textContent = name.charAt(0).toUpperCase();
+    profileName.textContent = name;
+
+  } catch (err) {
+    console.error("❌ Auth failed:", err);
+    window.location.href = "index.html";
+  }
+}
+
+
+
+
+
+
+lucide.createIcons();
+
+function toggleSidebar(){
+  document.getElementById("mobileSidebar").classList.toggle("open");
+  document.getElementById("backdrop").classList.toggle("show");
+}
+
+
+function toggleTheme(){
+  const html = document.documentElement;
+  const avatar = document.getElementById("profileAvatar");
+
+  html.classList.toggle("dark");
+
+  if(html.classList.contains("dark")){
+    avatar.style.background = "#1e293b";
+    avatar.style.color = "#ffffff";
+  }else{
+    avatar.style.background = "";
+    avatar.style.color = "";
+  }
+}
+
+
+function navigate(page,el){
+  document.querySelectorAll(".nav-link").forEach(l=>l.classList.remove("active"));
+  if(el) el.classList.add("active");
+
+  const title=document.getElementById("pageTitle");
+  const content=document.getElementById("pageContent");
+
+  if(page==="home"){
+  title.innerText="Latest Blogs";
+  content.innerHTML=`
+
+    <div class="space-y-6">
+
+      <div class="card">
+        <h3 class="text-xl font-bold mb-1">
+          My Journey from NIT Agartala to Software Engineer
+        </h3>
+        <p class="text-sm text-gray-400 mb-3">
+          by Ankit Sharma · Alumni (CSE 2020)
+        </p>
+        <p class="text-gray-400 mb-4">
+          Sharing my experience of campus life, placements, and how SARC
+          helped me stay connected with juniors.
+        </p>
+        <button class="text-sm text-green-500">Read More</button>
+      </div>
+
+      <div class="card">
+        <h3 class="text-xl font-bold mb-1">
+          How to Prepare for Internships in 2nd Year
+        </h3>
+        <p class="text-sm text-gray-400 mb-3">
+          by Riya Debnath · CSE 3rd Year
+        </p>
+        <p class="text-gray-400 mb-4">
+          A practical guide on skills, projects, and mistakes to avoid
+          while applying for internships.
+        </p>
+        <button class="text-sm text-green-500">Read More</button>
+      </div>
+
+      <div class="card">
+        <h3 class="text-xl font-bold mb-1">
+          Research Opportunities at NIT Agartala
+        </h3>
+        <p class="text-sm text-gray-400 mb-3">
+          by Dr. Faculty Name · Professor
+        </p>
+        <p class="text-gray-400 mb-4">
+          Overview of ongoing research areas, labs, and how students
+          can get involved early.
+        </p>
+        <button class="text-sm text-green-500">Read More</button>
+      </div>
+
+    </div>
+  `;
+}
+
+
+  if(page === "blogs") {
+  title.innerText = "Blogs";
+
+  
+    content.innerHTML = `
+  <!-- ✍️ CREATE BLOG POST -->
+  <div class="mb-10">
+
+    <div class="card p-8 border border-gray-200 dark:border-gray-700 
+                bg-gradient-to-br from-white to-gray-50 
+                dark:from-[#020617] dark:to-[#020617]">
+
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 
+                    flex items-center justify-center font-bold">
+          ✍️
+        </div>
+        <h2 class="text-2xl font-semibold">Write a new blog</h2>
+      </div>
+
+      <!-- Title -->
+      <input
+        id="postTitle"
+        type="text"
+        placeholder="Blog title..."
+        class="w-full text-2xl font-semibold 
+               border-0 border-b-2 border-gray-200 
+               focus:border-green-500 focus:ring-0 
+               bg-transparent pb-3 mb-6
+               placeholder-gray-400
+               dark:text-white dark:border-gray-700"
+      />
+
+      <!-- Content -->
+      <textarea
+        id="postContent"
+        rows="8"
+        placeholder="Start writing your story here..."
+        class="w-full text-lg leading-relaxed
+               border rounded-xl p-5
+               focus:ring-2 focus:ring-green-400 focus:border-green-400
+               bg-white dark:bg-[#020617]
+               placeholder-gray-400
+               dark:text-white dark:border-gray-700
+               resize-none"
+      ></textarea>
+
+      <!-- Error -->
+      <p id="postError" class="text-sm text-red-500 hidden mt-3"></p>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-between mt-6">
+        <p class="text-sm text-gray-400">
+          Share your experience with the SARC community
+        </p>
+
+        <button
+          onclick="createPost()"
+          class="px-8 py-3 rounded-xl
+                 bg-green-500 hover:bg-green-600
+                 text-white font-semibold
+                 shadow-lg shadow-green-500/30
+                 transition-all"
+        >
+          Publish Blog
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 📚 BLOG POSTS -->
+  <div id="postsContainer" class="space-y-8"></div>
+`;
+
+
+  loadPosts();
+}
+
+
+  if(page==="articles"){
+    title.innerText="Articles";
+    content.innerHTML=`<div class="card">Featured articles section</div>`;
+  }
+
+  if(page==="alumni"){
+    title.innerText="Alumni";
+    content.innerHTML=`<div class="card">Alumni directory & interaction</div>`;
+  }
+
+  if(page==="gallery"){
+    title.innerText="Gallery";
+    content.innerHTML=`<div class="card">College memories gallery</div>`;
+  }
+}
+async function createPost() {
+  const title = document.getElementById("postTitle").value.trim();
+  const content = document.getElementById("postContent").value.trim();
+  const error = document.getElementById("postError");
+
+  error.classList.add("hidden");
+
+  if (!title || !content) {
+    error.textContent = "Title and content are required";
+    error.classList.remove("hidden");
+    return;
+  }
+
+  try {
+    await apiFetch("/api/v1/posts", {
+      method: "POST",
+      body: JSON.stringify({ title, content })
+    });
+
+    document.getElementById("postTitle").value = "";
+    document.getElementById("postContent").value = "";
+
+    loadPosts();
+  } catch (err) {
+    error.textContent = err.message;
+    error.classList.remove("hidden");
+  }
+}
+
+async function loadPosts() {
+  const container = document.getElementById("postsContainer");
+  if (!container) return;
+
+  container.innerHTML = `<p class="text-gray-400">Loading posts...</p>`;
+
+  try {
+    const res = await apiFetch("/api/v1/posts");
+
+    if (!res.posts.length) {
+      container.innerHTML = `<p class="text-gray-400">No posts yet.</p>`;
+      return;
+    }
+
+    container.innerHTML = res.posts.map(post => `
+      <div class="card">
+        <h3 class="text-xl font-bold mb-1">${post.title}</h3>
+        <p class="text-sm text-gray-400 mb-3">
+          by ${post.author.name}
+        </p>
+        <p class="text-gray-400 mb-4">${post.content}</p>
+      </div>
+    `).join("");
+  } catch (err) {
+    container.innerHTML =
+      `<p class="text-red-500">Failed to load posts</p>`;
+  }
+}
+
+function logout() {
+fetch("/api/v1/auth/logout", {
+    method: "POST",
+    credentials: "include"
+  }).finally(() => {
+window.location.href = "index.html";
+  });
+}
+
+
+/* Default */
+(async function initApp() {
+  const ok = await loadLoggedInUser();
+  if (ok) {
+    navigate("home");
+  }
+})();
+
+window.toggleSidebar = toggleSidebar;
+window.toggleTheme = toggleTheme;
+window.navigate = navigate;
+window.logout = logout;
+window.createPost = createPost;
+window.loadPosts = loadPosts;
+
+
+</script>
+
+
+</body>
+</html>
