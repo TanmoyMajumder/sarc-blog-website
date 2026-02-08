@@ -2,6 +2,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { sendOTP } from "../utils/sendOTP.js";
+export const getMe = async (req, res) => {
+  const user = await User.findById(req.user._id)
+    .populate("savedPosts.post", "_id title author");
+
+  res.json({ user });
+};
 
 /* ================= REGISTER ================= */
 export const registerUser = async (req, res) => {
@@ -61,8 +67,11 @@ export const registerUser = async (req, res) => {
 };
 
 /* ================= LOGIN ================= */
+
 export const loginUser = async (req, res) => {
   try {
+    console.log("LOGIN BODY:", req.body);
+
     const { email, password } = req.body;
 
     // 1️⃣ Validation

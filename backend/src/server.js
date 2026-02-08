@@ -15,6 +15,10 @@ import "./config/passport.js";
 // routes
 import authroutes from "./routes/authroutes.js";
 import postRoutes from "./routes/postRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,15 +27,18 @@ const app = express();
 
 /* ================= MIDDLEWARES ================= */
 
-// ✅ SAME-ORIGIN SETUP (Option 1)
+//  SAME-ORIGIN SETUP (Option 1)
 app.use(cors({ origin: true, credentials: true }));
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
 
-// ✅ SERVE FRONTEND (ONCE, AFTER MIDDLEWARE)
+//  SERVE FRONTEND (ONCE, AFTER MIDDLEWARE)
 app.use(express.static(path.join(__dirname, "../../frontend")));
+//  SERVE UPLOADED IMAGES
+app.use("/uploads", express.static("uploads"));
+
 
 /* ================= API ROUTES ================= */
 app.use("/api/v1/auth", authroutes);
@@ -41,6 +48,9 @@ app.use("/api/v1/posts", postRoutes);
 app.get("/health", (req, res) => {
   res.json({ status: "OK" });
 });
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/admin", adminRoutes);
+app.use("/api/v1/feedback", feedbackRoutes);
 
 /* ================= START SERVER ================= */
 const PORT = process.env.PORT || 5000;

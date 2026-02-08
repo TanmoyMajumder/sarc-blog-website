@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SARC Blog</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:
+    radial-gradient(circle at 50% 0%, #eef2ff 0%, #ffffff 45%);
+}
+
+/* ====== PREMIUM READING WIDTH ====== */
+.reading-wrap{
+  max-width:820px;
+}
+
+/* ====== GLASS CARD ====== */
+.glass{
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(28px);
+  border:1px solid rgba(15,23,42,0.08);
+  box-shadow:
+    0 40px 80px -30px rgba(15,23,42,.18),
+    inset 0 1px 0 rgba(255,255,255,.6);
+}
+
+/* ====== TITLE ====== */
+.blog-title{
+  font-size:3rem;
+  font-weight:800;
+  line-height:1.15;
+  letter-spacing:-0.03em;
+  color:#020617;
+}
+
+/* ====== AUTHOR ====== */
+.author-name{
+  font-weight:700;
+  font-size:1.05rem;
+  color:#020617;
+}
+
+/* ====== CONTENT ====== */
+.article p{
+  font-size:1.06rem;
+  line-height:1.95;
+  margin-bottom:1.6rem;
+  color:#334155;
+}
+
+/* ====== IMAGES ====== */
+.article-img{
+  border-radius:22px;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.35);
+}
+
+/* ====== FADE ====== */
+.fade-in{
+  animation:fadeIn .7s ease forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+/* ===== FLOATING BLOBS ===== */
+.blob{
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.45;
+  animation:float 22s ease-in-out infinite alternate;
+}
+
+.blob-green{
+  background:#22c55e;
+  top:-120px;
+  left:-120px;
+}
+
+.blob-blue{
+  background:#3b82f6;
+  bottom:-140px;
+  right:-100px;
+  animation-duration:26s;
+}
+
+.blob-emerald{
+  background:#10b981;
+  top:40%;
+  left:60%;
+  width:360px;
+  height:360px;
+  animation-duration:30s;
+}
+
+@keyframes float{
+  from{
+    transform:translateY(0) translateX(0);
+  }
+  to{
+    transform:translateY(-60px) translateX(40px);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TOP NAV -->
+<header class="sticky top-0 z-40 bg-white/70 backdrop-blur border-b">
+  <div class="max-w-7xl mx-auto h-16 px-6 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="assets/logo 2.jpeg" class="w-9 h-9 object-contain">
+      <span class="font-extrabold text-lg">SARC</span>
+    </div>
+
+    <button onclick="history.back()"
+      class="text-sm font-semibold text-green-600 hover:underline">
+      ← Back to blogs
+    </button>
+  </div>
+</header>
+
+<!-- PAGE -->
+<main class="flex justify-center px-4 py-20">
+  <article class="reading-wrap w-full glass rounded-[2.5rem] p-10 md:p-16 fade-in">
+
+    <!-- TITLE -->
+    <h1 id="postTitle" class="blog-title mb-10">
+      Loading…
+    </h1>
+
+    <!-- AUTHOR -->
+    <div class="flex items-center gap-4 mb-14">
+      <div class="w-14 h-14 rounded-full p-[3px]
+                  bg-gradient-to-br from-green-400 to-emerald-600">
+        <div id="authorAvatar"
+             class="w-full h-full rounded-full bg-white
+                    flex items-center justify-center
+                    font-extrabold text-xl">
+        </div>
+      </div>
+
+      <div>
+        <p id="authorName" class="author-name"></p>
+        <p id="postMeta" class="text-sm text-slate-400"></p>
+      </div>
+    </div>
+
+    <!-- IMAGES -->
+    <div id="postImages" class="space-y-10 mb-16"></div>
+
+    <!-- CONTENT -->
+    <div id="postContent" class="article"></div>
+
+    <!-- FOOTER -->
+    <div class="mt-20 pt-8 border-t text-xs text-slate-400 flex justify-between">
+      <span>SARC Student Community</span>
+      <span>End of article</span>
+    </div>
+
+  </article>
+</main>
+
+<!-- IMAGE MODAL -->
+<div id="imageModal"
+     class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50"
+     onclick="closeImageModal()">
+  <img id="modalImage"
+       class="max-w-[90%] max-h-[90%] rounded-2xl shadow-2xl">
+</div>
+
+<script type="module">
+import { apiFetch } from "./js/api.js";
+
+const id = new URLSearchParams(window.location.search).get("id");
+
+async function loadPost(){
+  const res = await apiFetch(`/api/v1/posts/${id}`);
+  const p = res.post;
+
+  document.title = p.title;
+
+  document.getElementById("postTitle").textContent = p.title;
+const authorName = document.getElementById("authorName");
+authorName.textContent = p.author.name;
+authorName.classList.add("cursor-pointer", "hover:underline");
+authorName.onclick = () => {
+  const slug = p.author.name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9 ]/g, "")
+    .replace(/\s+/g, "-");
+
+  window.open(`/public-profile.html?user=${slug}`, "_blank");
+};
+  document.getElementById("postMeta").textContent =
+    `SARC Community · ${new Date(p.createdAt).toDateString()}`;
+
+  const avatar = document.getElementById("authorAvatar");
+  avatar.innerHTML = p.author.profileImage
+    ? `<img src="${p.author.profileImage}"
+            class="w-full h-full rounded-full object-cover">`
+    : p.author.name.charAt(0).toUpperCase();
+
+  // Images
+  document.getElementById("postImages").innerHTML =
+    p.images.map(img => `
+      <img src="${img}"
+           onclick="openImageModal('${img}')"
+           class="article-img w-full cursor-pointer">
+    `).join("");
+
+  // Content
+  document.getElementById("postContent").innerHTML =
+    p.content.split("\n").map(t => `<p>${t}</p>`).join("");
+}
+
+loadPost();
+
+/* IMAGE MODAL */
+window.openImageModal = src => {
+  document.getElementById("modalImage").src = src;
+  document.getElementById("imageModal").classList.remove("hidden");
+  document.getElementById("imageModal").classList.add("flex");
+};
+window.closeImageModal = () =>
+  document.getElementById("imageModal").classList.add("hidden");
+</script>
+<!-- 🌫️ FLOATING BACKGROUND -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+  <div class="blob blob-green"></div>
+  <div class="blob blob-blue"></div>
+  <div class="blob blob-emerald"></div>
+</div>
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-[0.03]"
+     style="background-image:url('https://grainy-gradients.vercel.app/noise.svg')">
+</div>
+
+</body>
+</html>

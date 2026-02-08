@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SARC | Public Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --brand-primary: #059669;
+      --brand-dark: #064e3b;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fafafa;
+      color: #1a1a1a;
+    }
+
+    .font-serif {
+      font-family: 'Instrument Serif', serif;
+    }
+
+    .glass-nav {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+
+    .profile-banner {
+      background: radial-gradient(circle at top right, #064e3b, #022c22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://www.transparenttextures.com/patterns/cubes.png");
+      opacity: 0.05;
+    }
+
+    .avatar-wrapper {
+      box-shadow: 0 25px 60px -15px rgba(0,0,0,.25);
+      border: 4px solid #fff;
+    }
+
+    .article-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      transition: all .45s cubic-bezier(.16,1,.3,1);
+    }
+
+    .article-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--brand-primary);
+      box-shadow: 0 35px 70px -18px rgba(0,0,0,.15);
+    }
+
+    .article-card .arrow {
+      transition: transform .3s ease;
+    }
+
+    .article-card:hover .arrow {
+      transform: translateX(6px);
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 glass-nav">
+  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center">
+        <img src="assets/logo 2.jpeg" class="w-7 h-7 object-contain" />
+      </div>
+      <div>
+        <h2 class="text-xs font-black tracking-widest uppercase">
+          SARC Public Profile
+        </h2>
+        <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+          Verified Member
+        </p>
+      </div>
+    </div>
+
+    <button onclick="goBack()"
+      class="px-5 py-2.5 rounded-full bg-slate-900 text-white
+             text-xs font-bold hover:bg-emerald-600 transition active:scale-95">
+      ← Dashboard
+    </button>
+
+  </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="relative pt-10">
+  <div class="max-w-6xl mx-auto px-6">
+
+    <div class="profile-banner h-72 rounded-[2.5rem] shadow-2xl relative z-10"></div>
+
+    <div class="max-w-4xl mx-auto -mt-36 relative z-30 px-6">
+      <div class="flex flex-col items-center text-center">
+
+        <!-- AVATAR -->
+        <div id="avatar"
+             class="avatar-wrapper w-48 h-48 rounded-full bg-white p-2 mb-8 relative z-30">
+          <div
+            class="w-full h-full rounded-full bg-slate-100
+                   flex items-center justify-center
+                   text-6xl font-serif text-slate-300
+                   overflow-hidden">
+          </div>
+        </div>
+
+        <!-- ROLE -->
+        <span id="role"
+          class="mb-4 px-4 py-1.5 rounded-full
+                 text-[10px] font-black tracking-[0.25em]
+                 bg-emerald-50 text-emerald-700 uppercase
+                 border border-emerald-100">
+        </span>
+
+        <!-- NAME -->
+        <h1 id="name"
+          class="text-4xl md:text-6xl font-serif font-medium tracking-tight mb-4">
+        </h1>
+
+        <!-- BADGES -->
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+
+          <!-- BRANCH -->
+          <div class="flex items-center gap-2 px-5 py-2 rounded-full
+                      bg-white/80 backdrop-blur shadow-md
+                      border border-slate-200 text-sm font-semibold">
+            🏢 <span id="dept"></span>
+          </div>
+
+          <!-- MEMBER SINCE -->
+          <div class="flex items-center gap-2 px-5 py-2 rounded-full
+                      bg-white/80 backdrop-blur shadow-md
+                      border border-slate-200 text-sm font-semibold">
+            🗓️ <span id="joined"></span>
+          </div>
+
+        </div>
+
+        <!-- BIO -->
+        <div class="max-w-2xl">
+          <p id="bio"
+             class="text-lg md:text-xl leading-relaxed
+                    text-slate-600 italic font-light">
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BLOGS -->
+<section class="max-w-6xl mx-auto px-6 py-24">
+  <div class="flex items-end justify-between mb-12 border-b pb-8">
+
+    <div>
+      <h2 class="text-3xl font-serif font-medium">
+        Intellectual Contributions
+      </h2>
+      <p class="text-slate-500 mt-2 text-sm">
+        Ideas, research, and experiences shared with the SARC community
+      </p>
+    </div>
+
+    <button onclick="document.getElementById('blogs').scrollIntoView({behavior:'smooth'})"
+      class="text-emerald-600 font-bold text-xs uppercase tracking-widest">
+      Scroll to explore ↓
+    </button>
+
+  </div>
+
+  <div id="blogs"
+       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+  </div>
+</section>
+
+</main>
+
+<footer class="py-12 border-t text-center text-xs text-slate-400">
+  © SARC Research Portal — All Rights Reserved
+</footer>
+
+<script>
+const userId = new URLSearchParams(window.location.search).get("u");
+
+async function loadPublicProfile() {
+  try {
+    const res = await fetch(`/api/v1/users/public/${userId}`);
+    if (!res.ok) throw new Error();
+
+    const { user, blogs } = await res.json();
+
+    document.getElementById("name").textContent = user.name;
+    document.getElementById("role").textContent =
+      user.role || "Student Contributor";
+
+    document.getElementById("dept").textContent =
+      user.department || "ECE";
+
+    document.getElementById("joined").textContent =
+      "Member since " + new Date(user.createdAt).getFullYear();
+
+    document.getElementById("bio").textContent =
+      user.bio ||
+      "Crafting ideas, research, and digital narratives within the SARC ecosystem.";
+
+    const avatarBox =
+      document.getElementById("avatar").firstElementChild;
+
+    avatarBox.innerHTML = user.profileImage
+      ? `<img src="${user.profileImage}" class="w-full h-full object-cover" />`
+      : user.name.charAt(0).toUpperCase();
+
+    const blogsBox = document.getElementById("blogs");
+
+    if (!blogs.length) {
+      blogsBox.innerHTML = `
+        <div class="col-span-full py-20 text-center
+                    bg-slate-50 rounded-[2rem]
+                    border-2 border-dashed border-slate-200">
+          <p class="text-slate-400 italic font-medium">
+            This member hasn’t published yet.
+          </p>
+        </div>`;
+      return;
+    }
+
+    blogsBox.innerHTML = blogs.map(b => `
+      <article onclick="openBlog('${b._id}')"
+        class="article-card p-8 rounded-[2rem]
+               cursor-pointer flex flex-col group">
+
+        <span class="text-[10px] font-bold text-emerald-600
+                     uppercase tracking-widest mb-4">
+          ${new Date(b.createdAt).toLocaleDateString()}
+        </span>
+
+        <h3 class="text-xl font-bold leading-snug
+                   text-slate-900 mb-6
+                   group-hover:text-emerald-700 transition">
+          ${b.title}
+        </h3>
+
+        <div class="mt-auto flex items-center gap-2
+                    text-sm font-extrabold text-slate-900">
+          Read Entry
+          <span class="arrow text-emerald-500">→</span>
+        </div>
+
+      </article>
+    `).join("");
+
+  } catch {
+    document.body.innerHTML = `
+      <div class="min-h-screen flex items-center justify-center
+                  text-slate-400 font-bold">
+        Profile not found
+      </div>`;
+  }
+}
+
+function openBlog(id) {
+  window.location.href = `post.html?id=${id}`;
+}
+function goBack() {
+  window.location.href = "app.html";
+}
+
+loadPublicProfile();
+</script>
+
+</body>
+</html>

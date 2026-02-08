@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SARC Admin | Dashboard</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #f8fafc;
+    }
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 18px 40px -12px rgba(0,0,0,.08);
+    }
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #374151;
+      transition: all .2s ease;
+    }
+    .sidebar-item:hover {
+      background: #f1f5f9;
+    }
+    .sidebar-active {
+      background: #e0f2fe;
+      color: #0369a1;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- 🔐 ADMIN NAVBAR -->
+<nav class="fixed top-0 left-0 w-full h-20 bg-white border-b z-50">
+  <div class="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
+
+    <div class="flex items-center gap-4">
+      <img
+        src="assets/logo 2.jpeg"
+        class="h-11 w-11 rounded-full object-cover
+               ring-2 ring-blue-600/30 shadow"
+      />
+      <span class="text-xl font-bold">
+        SARC <span class="text-blue-600">Admin</span>
+      </span>
+    </div>
+
+    <button
+      onclick="logoutAdmin()"
+      class="flex items-center gap-2 text-sm font-semibold text-red-600 hover:underline">
+      <i data-lucide="log-out"></i> Logout
+    </button>
+
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="flex pt-20">
+
+  <!-- SIDEBAR -->
+  <aside class="w-72 bg-white border-r min-h-screen p-6 space-y-3">
+
+    <div class="sidebar-item sidebar-active" onclick="navigate('overview', this)">
+      <i data-lucide="layout-dashboard"></i>
+      Overview
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('users', this)">
+      <i data-lucide="users"></i>
+      Users
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('posts', this)">
+      <i data-lucide="file-text"></i>
+      Blogs
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('feedback', this)">
+      <i data-lucide="message-square"></i>
+      Feedback
+    </div>
+
+    <div class="sidebar-item" onclick="navigate('moderation', this)">
+      <i data-lucide="shield-alert"></i>
+      Moderation
+    </div>
+
+    <hr class="my-3">
+
+    <div class="sidebar-item text-red-600" onclick="logoutAdmin()">
+      <i data-lucide="log-out"></i>
+      Logout
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 p-8">
+
+    <h1 id="pageTitle" class="text-3xl font-bold mb-8">
+      Admin Overview
+    </h1>
+
+    <div id="pageContent"></div>
+
+  </main>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  function navigate(page, el) {
+    document
+      .querySelectorAll(".sidebar-item")
+      .forEach(i => i.classList.remove("sidebar-active"));
+
+    if (el) el.classList.add("sidebar-active");
+
+    const title = document.getElementById("pageTitle");
+    const content = document.getElementById("pageContent");
+
+    /* ================= OVERVIEW ================= */
+    if (page === "overview") {
+      title.innerText = "Admin Overview";
+      content.innerHTML = `
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <div class="card">
+            <h3 class="text-sm text-gray-400">Total Users</h3>
+            <p class="text-3xl font-bold mt-2">—</p>
+          </div>
+
+          <div class="card">
+            <h3 class="text-sm text-gray-400">Total Blogs</h3>
+            <p class="text-3xl font-bold mt-2">—</p>
+          </div>
+
+          <div class="card">
+            <h3 class="text-sm text-gray-400">Open Feedback</h3>
+            <p class="text-3xl font-bold mt-2">—</p>
+          </div>
+
+        </div>
+      `;
+    }
+
+    /* ================= USERS ================= */
+    if (page === "users") {
+      title.innerText = "User Management";
+      content.innerHTML = `
+        <div class="card">
+          <p class="text-gray-500">
+            User list, roles, and controls will appear here.
+          </p>
+        </div>
+      `;
+    }
+
+    /* ================= POSTS ================= */
+    if (page === "posts") {
+      title.innerText = "Blog Moderation";
+      content.innerHTML = `
+        <div class="card">
+          <p class="text-gray-500">
+            All blogs with delete / review controls.
+          </p>
+        </div>
+      `;
+    }
+
+    /* ================= FEEDBACK ================= */
+    if (page === "feedback") {
+  title.innerText = "User Feedback";
+
+  content.innerHTML = `
+    <div class="card">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left text-gray-500 border-b">
+            <th class="pb-2">User</th>
+            <th>Email</th>
+            <th>Message</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="feedbackTable"></tbody>
+      </table>
+    </div>
+  `;
+
+  loadFeedback();
+}
+
+
+    /* ================= MODERATION ================= */
+    if (page === "moderation") {
+      title.innerText = "Platform Moderation";
+      content.innerHTML = `
+        <div class="card">
+          <p class="text-gray-500">
+            Abuse reports, content flags, and cleanup tools.
+          </p>
+        </div>
+      `;
+    }
+  }
+
+  function logoutAdmin() {
+    // backend hook later
+    window.location.href = "admin-login.html";
+  }
+
+  // Default load
+  navigate("overview", document.querySelector(".sidebar-item"));
+  async function loadFeedback() {
+  const tbody = document.getElementById("feedbackTable");
+
+  try {
+    const res = await fetch("/api/v1/admin/feedback", {
+      credentials: "include"
+    });
+
+    const data = await res.json();
+
+    tbody.innerHTML = data.feedback.map(f => `
+      <tr class="border-b last:border-b-0">
+        <td class="py-3 font-medium">
+          ${f.user?.name || "Unknown"}
+        </td>
+        <td>${f.email}</td>
+        <td class="max-w-xs truncate">${f.message}</td>
+        <td>${new Date(f.createdAt).toLocaleDateString()}</td>
+      </tr>
+    `).join("");
+
+  } catch {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4" class="py-6 text-center text-gray-400">
+          Failed to load feedback
+        </td>
+      </tr>
+    `;
+  }
+}
+
+</script>
+
+</body>
+</html>

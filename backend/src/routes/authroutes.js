@@ -126,11 +126,10 @@ res.redirect("/app.html");
 );
 
 /* ================= CURRENT USER ================= */
-router.get("/me", protect, (req, res) => {
-  res.json({
-    user: req.user
-  });
-});
+import { getMe } from "../controllers/authcontroller.js";
+
+router.get("/me", protect, getMe);
+
 /* ================= LOGOUT ================= */
 router.post("/logout", (req, res) => {
   res.clearCookie("token", {

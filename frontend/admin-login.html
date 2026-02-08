@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SARC Admin | Login</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.7s ease-out forwards;
+    }
+
+    .glass {
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,0.75);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-slate-200">
+
+  <!-- 🌫️ Decorative Background -->
+  <div class="absolute -top-32 right-[-15%] w-[60%] h-[600px] bg-blue-200/30 rounded-full blur-3xl"></div>
+
+  <!-- 🔐 ADMIN NAVBAR -->
+  <header class="relative z-10 w-full border-b bg-white/70 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex items-center gap-4">
+ <img
+  src="assets/logo 2.jpeg"
+  class="h-11 w-11 rounded-full object-cover
+         ring-2 ring-blue-600/30 shadow-md"
+/>
+     <span class="text-lg font-bold text-slate-800">
+        SARC <span class="text-blue-600">Admin</span>
+      </span>
+    </div>
+    <!-- ⬅️ BACK TO DASHBOARD (TOP RIGHT) -->
+<button
+  onclick="window.location.href='app.html'"
+  class="fixed top-6 right-6 z-[9999]
+         flex items-center gap-2
+         px-4 py-2 rounded-full
+         bg-white/80 backdrop-blur
+         border border-slate-200
+         text-sm font-semibold text-slate-600
+         shadow-md
+         hover:text-blue-600 hover:shadow-lg
+         transition-all duration-300
+         group">
+
+  <span
+    class="inline-block transition-transform duration-300
+           group-hover:-translate-x-1">
+    ←
+  </span>
+
+  Back to Dashboard
+</button>
+
+
+  </header>
+
+  <!-- 🧊 LOGIN CARD -->
+  <main class="relative z-10 flex items-center justify-center px-6 py-20">
+
+    <div class="w-full max-w-md glass border border-white/60 rounded-3xl p-10 shadow-2xl fade-up">
+
+      <div class="mb-8 text-center">
+        <h1 class="text-3xl font-bold text-slate-800 mb-1">
+          Admin Login
+        </h1>
+        <p class="text-sm text-slate-500">
+          Restricted access · Authorized personnel only
+        </p>
+      </div>
+
+      <!-- ERROR -->
+      <p id="admin-error" class="text-red-500 text-sm mb-4 text-center"></p>
+
+      <!-- FORM -->
+      <form onsubmit="handleAdminLogin(event)" class="space-y-6">
+
+        <div>
+          <label class="block text-sm font-semibold text-slate-600 mb-1">
+            Admin Email
+          </label>
+          <input
+            id="admin-email"
+            type="email"
+            required
+            class="w-full px-4 py-3 rounded-xl border border-slate-300
+                   bg-white/80
+                   focus:outline-none focus:border-blue-500
+                   focus:ring-4 focus:ring-blue-500/10 transition"
+            placeholder="admin@sarc.edu"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-slate-600 mb-1">
+            Password
+          </label>
+          <input
+            id="admin-password"
+            type="password"
+            required
+            class="w-full px-4 py-3 rounded-xl border border-slate-300
+                   bg-white/80
+                   focus:outline-none focus:border-blue-500
+                   focus:ring-4 focus:ring-blue-500/10 transition"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3 rounded-full
+                 bg-gradient-to-r from-blue-600 to-blue-700
+                 text-white font-semibold tracking-wide
+                 hover:shadow-xl hover:shadow-blue-500/30
+                 hover:-translate-y-[1px]
+                 transition-all duration-300">
+          Login to Admin Panel
+        </button>
+      </form>
+
+      <p class="text-xs text-slate-400 text-center mt-8">
+        © 2026 SARC · Unauthorized access is prohibited
+      </p>
+
+    </div>
+  </main>
+
+  <!-- 🔐 ADMIN AUTH SCRIPT (UNCHANGED) -->
+  <script type="module">
+    import { apiFetch } from "./js/api.js";
+
+    window.handleAdminLogin = async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("admin-email").value.trim();
+      const password = document.getElementById("admin-password").value;
+      const errorEl = document.getElementById("admin-error");
+
+      errorEl.textContent = "";
+
+      try {
+        await apiFetch("/api/v1/admin/login", {
+          method: "POST",
+          body: JSON.stringify({ email, password })
+        });
+
+const toast = document.getElementById("adminSuccessToast");
+
+toast.classList.remove("opacity-0");
+toast.classList.add("opacity-100");
+
+setTimeout(() => {
+  window.location.href = "/admin.html";
+}, 1200);
+      } catch (err) {
+        errorEl.textContent = err.message || "Admin login failed";
+      }
+    };
+  </script>
+<div
+  id="adminSuccessToast"
+  class="fixed bottom-6 left-1/2 -translate-x-1/2
+         bg-green-600 text-white
+         px-6 py-3 rounded-full
+         shadow-xl
+         flex items-center gap-2
+         opacity-0 pointer-events-none
+         transition-all duration-300 z-[9999]">
+
+  ✅ Admin logged in successfully
+</div>
+
+</body>
+</html>

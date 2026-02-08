@@ -150,6 +150,177 @@ body{
   background:#020617;
 }
 
+/*  Prevent layout shift when liking posts */
+#postsContainer {
+  min-height: 400px;
+}
+/* Comment polish */
+.comment-username {
+  font-weight: 700;
+  color: #111827;
+}
+.dark .comment-username {
+  color: #f9fafb;
+}
+
+/* ===== PREMIUM BLOG CARD ===== */
+.blog-card {
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -12px rgba(0,0,0,.15);
+}
+
+.blog-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.blog-content {
+  font-size: .95rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.dark .blog-content {
+  color: #cbd5f5;
+}
+
+.blog-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.blog-action-btn:hover {
+  color: #16a34a;
+}
+/* ================= PREMIUM BLOG UI ================= */
+.blog-card {
+  background: linear-gradient(
+    to bottom right,
+    rgba(255,255,255,0.95),
+    rgba(249,250,251,0.95)
+  );
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  transition: all .3s ease;
+}
+
+.dark .blog-card {
+  background: linear-gradient(
+    to bottom right,
+    rgba(2,6,23,.95),
+    rgba(15,23,42,.95)
+  );
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 50px -15px rgba(0,0,0,.25);
+}
+
+.blog-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+.blog-content {
+  font-size: .97rem;
+  line-height: 1.8;
+  color: #374151;
+}
+
+.dark .blog-content {
+  color: #cbd5e1;
+}
+
+.blog-action {
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: all .2s ease;
+}
+
+.blog-action:hover {
+  background: rgba(34,197,94,.12);
+  color: #16a34a;
+}
+
+.blog-avatar {
+  background: linear-gradient(135deg,#22c55e,#16a34a);
+}
+.blog-card {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.35);
+}
+
+.blog-action {
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(34,197,94,.15);
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.blog-action:hover::after {
+  opacity: 1;
+}
+.comment-actions button {
+  transition: color .2s ease;
+}
+.reaction-emoji {
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.reaction-emoji:hover {
+  transform: scale(1.3);
+}
+.fade-out {
+  animation: fadeOut .25s ease forwards;
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+/* 🔖 BOOKMARK ANIMATION */
+.bookmark-btn {
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.bookmark-btn.saved {
+  color: #16a34a; /* green */
+}
+
+.bookmark-btn.animate {
+  animation: bookmarkPop 0.35s ease;
+}
+
+@keyframes bookmarkPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
 
 
 </style>
@@ -217,9 +388,17 @@ body{
   <div id="profileName" class="px-4 py-2 text-sm font-semibold border-b"></div>
 
 
-  <div class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-[#020617]">
-    My Profile
-  </div>
+  <div
+  class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-[#020617]"
+  onclick="window.location.href='profile.html'">
+  My Profile
+</div>
+<li class="nav-link flex items-center gap-2"
+    onclick="window.location.href='admin-login.html'">
+  <i data-lucide="shield"></i>
+  <span>Admin Panel</span>
+</li>
+
 
   <div class="px-4 py-2 text-sm logout-btn cursor-pointer hover:bg-gray-100 dark:hover:bg-[#020617]"
      onclick="logout()">
@@ -246,10 +425,21 @@ body{
   <hr class="my-2">
 
   <div class="sidebar-item"><i data-lucide="plus-circle"></i> Create Post</div>
-  <div class="sidebar-item"><i data-lucide="bookmark"></i> Saved Posts</div>
+<div class="sidebar-item" onclick="navigate('saved')">
+  <i data-lucide="bookmark"></i> Saved Posts
+</div>
   <div class="sidebar-item"><i data-lucide="file-check"></i> My Posts</div>
-  <div class="sidebar-item"><i data-lucide="user"></i> My Profile</div>
-  <div class="sidebar-item"><i data-lucide="settings"></i> Settings</div>
+<div class="sidebar-item" onclick="window.location.href='profile.html'">
+  <i data-lucide="user"></i> My Profile
+</div>
+<div class="sidebar-item" onclick="openSettings()">
+  <i data-lucide="settings"></i> Settings
+</div>
+<div class="sidebar-item"
+     onclick="window.location.href='admin-login.html'">
+  <i data-lucide="shield"></i> Admin Panel
+</div>
+
 <div class="sidebar-item logout-btn" onclick="logout()">
   <i data-lucide="log-out"></i> Logout
 </div>
@@ -264,31 +454,66 @@ body{
 </div>
 
 <script type="module">
+
 import { apiFetch } from "./js/api.js";
+const postCache = new Map();
+window.postCache = postCache;
+
+let loggedInUserId = null;
 
 async function loadLoggedInUser() {
   try {
     const res = await apiFetch("/api/v1/auth/me");
-    console.log("🟢 /me response:", res);
+
+    /* ================= PROFILE IMAGE CACHE ================= */
+    if (res.user.profileImage) {
+localStorage.setItem(
+  `profileImage_${res.user._id}`,
+  res.user.profileImage
+);
+    }
+
+    /* ================= SAVED POSTS ================= */
+    window.savedPostIds = [];
+    window.savedPostMeta = {};
+
+    res.user.savedPosts.forEach(s => {
+      if (s.post && s.post._id) {
+        const id = s.post._id.toString();
+        window.savedPostIds.push(id);
+        window.savedPostMeta[id] = s.savedAt;
+      }
+    });
+
+    /* ================= USER INFO ================= */
+    window.currentUserId = res.user._id;
 
     const name = res.user.name;
-
-    console.log("🟡 Setting UI name:", name);
-
     const avatar = document.getElementById("profileAvatar");
-    const profileName = document.getElementById("profileName");
 
-    avatar.textContent = "";
-    profileName.textContent = "";
+const storedImage = localStorage.getItem(
+  `profileImage_${res.user._id}`
+);
 
-    avatar.textContent = name.charAt(0).toUpperCase();
-    profileName.textContent = name;
+    if (storedImage) {
+      avatar.innerHTML = `
+        <img src="${storedImage}"
+             class="w-full h-full rounded-full object-cover" />
+      `;
+    } else {
+      avatar.textContent = name.charAt(0).toUpperCase();
+    }
+
+    document.getElementById("profileName").textContent = name;
+
+    return true;
 
   } catch (err) {
-    console.error("❌ Auth failed:", err);
     window.location.href = "index.html";
+    return false;
   }
 }
+
 
 
 
@@ -317,9 +542,15 @@ function toggleTheme(){
     avatar.style.color = "";
   }
 }
+function openSettings() {
+  window.location.href = "settings.html";
+}
+window.openSettings = openSettings;
 
 
-function navigate(page,el){
+async function navigate(page, el){
+  window.currentPage = page;
+
   document.querySelectorAll(".nav-link").forEach(l=>l.classList.remove("active"));
   if(el) el.classList.add("active");
 
@@ -404,7 +635,8 @@ function navigate(page,el){
         id="postTitle"
         type="text"
         placeholder="Blog title..."
-        class="w-full text-2xl font-semibold 
+          oninput="updatePreview()"
+           class="w-full text-2xl font-semibold 
                border-0 border-b-2 border-gray-200 
                focus:border-green-500 focus:ring-0 
                bg-transparent pb-3 mb-6
@@ -417,7 +649,8 @@ function navigate(page,el){
         id="postContent"
         rows="8"
         placeholder="Start writing your story here..."
-        class="w-full text-lg leading-relaxed
+          oninput="updatePreview()"
+          class="w-full text-lg leading-relaxed
                border rounded-xl p-5
                focus:ring-2 focus:ring-green-400 focus:border-green-400
                bg-white dark:bg-[#020617]
@@ -425,6 +658,18 @@ function navigate(page,el){
                dark:text-white dark:border-gray-700
                resize-none"
       ></textarea>
+      <!-- 📷 Blog Images -->
+<input
+  type="file"
+  id="postImages"
+  multiple
+  accept="image/*"
+    oninput="updatePreview()"
+class="mt-4 block"
+/>
+<p id="selectedFiles" class="text-sm text-gray-400 mt-2"></p>
+
+
 
       <!-- Error -->
       <p id="postError" class="text-sm text-red-500 hidden mt-3"></p>
@@ -449,13 +694,29 @@ function navigate(page,el){
 
     </div>
   </div>
+<!--  PREVIEW -->
+<div id="previewCard" class="card mt-8 hidden">
+  <h2 class="text-2xl font-bold mb-4">Preview</h2>
+
+  <h3 id="previewTitle" class="text-xl font-bold mb-2"></h3>
+
+  <p class="text-sm text-gray-400 mb-4">
+    by You
+  </p>
+
+  <p id="previewContent" class="text-gray-400 mb-4"></p>
+
+  <div id="previewImages" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div>
+</div>
 
   <!-- 📚 BLOG POSTS -->
   <div id="postsContainer" class="space-y-8"></div>
 `;
 
+postCache.clear();
+await loadPosts();
 
-  loadPosts();
+
 }
 
 
@@ -473,10 +734,31 @@ function navigate(page,el){
     title.innerText="Gallery";
     content.innerHTML=`<div class="card">College memories gallery</div>`;
   }
+  if (page === "saved") {
+  title.innerText = "Saved Posts";
+
+  const savedPosts = Array.from(postCache.values())
+    .filter(post => window.savedPostIds.includes(post._id))
+    .sort((a, b) => {
+      const aTime = new Date(window.savedPostMeta[a._id]).getTime();
+      const bTime = new Date(window.savedPostMeta[b._id]).getTime();
+      return bTime - aTime; // newest saved first
+    });
+
+  content.innerHTML = savedPosts.length
+    ? `<div class="space-y-8">
+        ${savedPosts.map(renderPostCard).join("")}
+      </div>`
+    : `<p class="text-gray-400">No saved posts yet</p>`;
+}
+
+
+
 }
 async function createPost() {
   const title = document.getElementById("postTitle").value.trim();
   const content = document.getElementById("postContent").value.trim();
+  const imagesInput = document.getElementById("postImages");
   const error = document.getElementById("postError");
 
   error.classList.add("hidden");
@@ -488,20 +770,278 @@ async function createPost() {
   }
 
   try {
-    await apiFetch("/api/v1/posts", {
+    // 🔥 Use FormData (required for images)
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+
+    // append multiple images
+    for (const file of imagesInput.files) {
+      formData.append("images", file);
+    }
+
+    await fetch("/api/v1/posts", {
       method: "POST",
-      body: JSON.stringify({ title, content })
+      body: formData,
+      credentials: "include"
     });
 
+    // reset form
     document.getElementById("postTitle").value = "";
     document.getElementById("postContent").value = "";
+    imagesInput.value = "";
 
     loadPosts();
   } catch (err) {
-    error.textContent = err.message;
+    error.textContent = "Failed to publish post";
     error.classList.remove("hidden");
   }
 }
+function updatePreview() {
+  const title = document.getElementById("postTitle").value;
+  const content = document.getElementById("postContent").value;
+  const imagesInput = document.getElementById("postImages");
+
+  const previewCard = document.getElementById("previewCard");
+  const previewTitle = document.getElementById("previewTitle");
+  const previewContent = document.getElementById("previewContent");
+  const previewImages = document.getElementById("previewImages");
+  const selectedFiles = document.getElementById("selectedFiles");
+
+  // Show / hide preview card
+  if (title || content || imagesInput.files.length > 0) {
+    previewCard.classList.remove("hidden");
+  } else {
+    previewCard.classList.add("hidden");
+    selectedFiles.textContent = "";
+    return;
+  }
+
+  // Update text preview
+  previewTitle.textContent = title || "Untitled blog";
+  previewContent.textContent = content || "";
+
+  // Show selected file names
+  if (imagesInput.files.length > 0) {
+    selectedFiles.textContent =
+      "Selected images: " +
+      Array.from(imagesInput.files).map(file => file.name).join(", ");
+  } else {
+    selectedFiles.textContent = "";
+  }
+
+  // Clear old image previews
+  previewImages.innerHTML = "";
+
+  // Preview selected images
+  Array.from(imagesInput.files).forEach(file => {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    img.className = "rounded-lg object-cover w-full h-40";
+    previewImages.appendChild(img);
+  });
+}
+
+function getTotalReactions(postId) {
+  const post = postCache.get(postId);
+  if (!post || !post.reactions) return 0;
+
+  return (
+    post.reactions.like.length +
+    post.reactions.heart.length +
+    post.reactions.clap.length +
+    post.reactions.fire.length
+  );
+}
+function timeAgo(dateString) {
+  const seconds = Math.floor((Date.now() - new Date(dateString)) / 1000);
+
+  const intervals = [
+    { label: "year", seconds: 31536000 },
+    { label: "month", seconds: 2592000 },
+    { label: "week", seconds: 604800 },
+    { label: "day", seconds: 86400 },
+    { label: "hour", seconds: 3600 },
+    { label: "minute", seconds: 60 },
+  ];
+
+  for (const i of intervals) {
+    const count = Math.floor(seconds / i.seconds);
+    if (count >= 1) {
+      return `${count} ${i.label}${count > 1 ? "s" : ""} ago`;
+    }
+  }
+
+  return "Just now";
+}
+const BLOG_WORD_LIMIT = 120;
+
+function truncateContent(text, limit = BLOG_WORD_LIMIT) {
+  const words = text.split(" ");
+  if (words.length <= limit) {
+    return {
+      truncated: text,
+      isLong: false,
+    };
+  }
+
+  return {
+    truncated: words.slice(0, limit).join(" ") + "...",
+    isLong: true,
+  };
+}
+
+function renderPostCard(post) {
+  const { truncated, isLong } = truncateContent(post.content);
+
+  return `
+<article class="card blog-card space-y-5 relative" data-post-id="${post._id}">
+
+  ${
+    String(post.author._id) === String(window.currentUserId)
+      ? `<button
+          onclick="openPostDeleteModal('${post._id}')"
+          class="absolute top-5 right-5 text-gray-400 hover:text-red-500">
+          🗑️
+        </button>`
+      : ""
+  }
+
+  <!-- Author -->
+  <div class="flex items-center gap-3">
+   <div class="w-11 h-11 rounded-full overflow-hidden
+            bg-green-500 text-white
+            flex items-center justify-center font-bold"
+     ${String(post.author._id) === String(window.currentUserId) ? "data-avatar" : ""}>
+
+  ${
+    post.author.profileImage
+      ? `<img src="${post.author.profileImage}"
+              class="w-full h-full object-cover" />`
+      : post.author.name.charAt(0).toUpperCase()
+  }
+</div>
+
+
+    <div>
+<p class="font-semibold cursor-pointer text-green-600 hover:underline"
+   onclick="openUserProfile('${post.author._id}')">
+   ${post.author.name}
+</p>
+      <p class="text-xs text-gray-400">
+        SARC Community · ${timeAgo(post.createdAt)}
+      </p>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <h2 class="blog-title">${post.title}</h2>
+
+  <!-- Content -->
+
+<p class="blog-content">
+  ${truncated}
+</p>
+
+${
+  isLong
+    ? `
+      <button
+        onclick="openFullPost('${post._id}')"
+        class="mt-2 text-sm font-semibold text-green-600 hover:underline">
+        Read more →
+      </button>
+    `
+    : ""
+}
+
+  <!-- Images -->
+  ${
+    post.images?.length
+      ? `<div class="grid md:grid-cols-2 gap-4">
+          ${post.images.map(img => `
+            <img
+              src="${img}"
+              onclick="openImageModal('${img}')"
+              class="rounded-2xl h-60 w-full object-cover cursor-pointer"
+            />
+          `).join("")}
+        </div>`
+      : ""
+  }
+
+  <!-- REACTION SUMMARY -->
+  <div
+    class="flex items-center gap-2 text-sm text-gray-500 cursor-pointer"
+    onclick="openReactionSummary('${post._id}')">
+
+    👍 ❤️ 🔥 👏
+    <span class="font-medium">
+      <span id="total-react-${post._id}">
+        ${getTotalReactions(post._id)}
+      </span>
+      ${getTotalReactions(post._id) === 1 ? "like" : "likes"}
+    </span>
+  </div>
+
+  <!-- ACTION ROW -->
+  <div class="flex items-center gap-8 pt-3 border-t">
+
+    <!-- Like -->
+    <div class="relative">
+      <div
+        id="reaction-box-${post._id}"
+        class="hidden absolute -top-14 left-0
+               bg-white dark:bg-[#020617]
+               rounded-full shadow-xl
+               px-4 py-2 flex gap-4 z-50">
+        <button onclick="reactPost('${post._id}','like')">👍</button>
+        <button onclick="reactPost('${post._id}','heart')">❤️</button>
+        <button onclick="reactPost('${post._id}','clap')">👏</button>
+        <button onclick="reactPost('${post._id}','fire')">🔥</button>
+      </div>
+
+      <button
+        onclick="toggleReactionBox('${post._id}')"
+        class="flex items-center gap-2 text-gray-600 hover:text-green-600">
+        👍 Like
+      </button>
+    </div>
+
+    <!-- Comment -->
+    <button
+      onclick="openComments('${post._id}')"
+      class="text-gray-600 hover:text-green-600">
+      💬 ${post.comments.length}
+    </button>
+
+    <!-- Save -->
+    <button
+  onclick="toggleSavePost('${post._id}')"
+  id="save-btn-${post._id}"
+  class="bookmark-btn flex items-center gap-1 font-medium
+  ${window.savedPostIds.includes(post._id) ? "saved" : "text-gray-600 hover:text-green-600"}">
+
+  💾 <span id="save-text-${post._id}">
+    ${window.savedPostIds.includes(post._id)
+    ? `<span class="inline-block text-xs mt-1
+       px-2 py-1 rounded-full
+       bg-green-100 text-green-700 font-semibold">
+       ✓ Saved · ${timeAgo(window.savedPostMeta[post._id])}
+     </span>`
+    : ""}
+  </span>
+</button>
+
+
+  </div>
+</article>`;
+}
+function openFullPost(postId) {
+  window.location.href = `post.html?id=${postId}`;
+}
+window.openFullPost = openFullPost;
+
 
 async function loadPosts() {
   const container = document.getElementById("postsContainer");
@@ -511,44 +1051,1131 @@ async function loadPosts() {
 
   try {
     const res = await apiFetch("/api/v1/posts");
+res.posts.forEach(p => postCache.set(p._id, p));
 
     if (!res.posts.length) {
       container.innerHTML = `<p class="text-gray-400">No posts yet.</p>`;
       return;
     }
 
-    container.innerHTML = res.posts.map(post => `
-      <div class="card">
-        <h3 class="text-xl font-bold mb-1">${post.title}</h3>
-        <p class="text-sm text-gray-400 mb-3">
-          by ${post.author.name}
-        </p>
-        <p class="text-gray-400 mb-4">${post.content}</p>
-      </div>
-    `).join("");
+    container.innerHTML = res.posts.map(renderPostCard).join("");
+
   } catch (err) {
     container.innerHTML =
       `<p class="text-red-500">Failed to load posts</p>`;
   }
 }
 
+
+async function openReactionSummary(postId) {
+  let post = postCache.get(postId);
+  if (!post) return;
+
+  // 🔥 CHECK: do we have populated users?
+  const hasPopulatedUsers = ["like", "heart", "clap", "fire"].some(
+    type =>
+      post.reactions[type] &&
+      post.reactions[type].length > 0 &&
+      typeof post.reactions[type][0] === "object" &&
+      post.reactions[type][0].name
+  );
+
+  // ❗ If reactions exist but users are NOT populated → fetch fresh post once
+  if (!hasPopulatedUsers) {
+    try {
+      const res = await fetch(`/api/v1/posts/${postId}`, {
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        post = data.post;
+        postCache.set(postId, post);
+      }
+    } catch (err) {
+      console.error("Failed to refetch post for reactions");
+    }
+  }
+
+  renderReactionModal(post);
+  document.getElementById("reactionModal").classList.remove("hidden");
+}
+
+
+
+async function toggleLike(postId, btn) {
+  try {
+    const res = await fetch(`/api/v1/posts/${postId}/like`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    // 🔥 Update only the number, not whole UI
+    const countEl = document.getElementById(`like-count-${postId}`);
+    if (countEl) {
+      countEl.textContent = data.likesCount;
+    }
+
+  } catch (err) {
+    alert("Failed to like post");
+  }
+}
+async function addComment(postId) {
+  const input = document.getElementById(`comment-${postId}`);
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  try {
+    const res = await fetch(`/api/v1/posts/${postId}/comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ text }),
+    });
+
+    const data = await res.json();
+
+    // 🔥 Add comment instantly (NO reload)
+    const commentsBox = document.getElementById(`comments-${postId}`);
+
+    const div = document.createElement("div");
+    div.className = "flex gap-3";
+
+    div.innerHTML = `
+      <div class="w-10 h-10 rounded-full overflow-hidden
+            bg-green-500 text-white
+            flex items-center justify-center font-bold">
+  ${
+    data.comment.user.profileImage
+      ? `<img src="${data.comment.user.profileImage}"
+              class="w-full h-full object-cover" />`
+      : data.comment.user.name.charAt(0).toUpperCase()
+  }
+</div>
+
+
+      <div class="flex-1">
+        <div class="bg-gray-50 dark:bg-[#020617]
+                    rounded-xl px-4 py-2">
+          <p class="text-sm font-semibold">
+            ${data.comment.user.name}
+          </p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            ${data.comment.text}
+          </p>
+        </div>
+
+        <div class="flex gap-4 mt-1 text-xs text-gray-500">
+          <button class="hover:text-green-600">Like</button>
+          <button class="hover:text-green-600">Reply</button>
+        </div>
+      </div>
+    `;
+
+    commentsBox.appendChild(div);
+
+    input.value = "";
+
+  } catch (err) {
+    alert("Failed to add comment");
+  }
+}
+
+function toggleReply(postId, btn) {
+  const replyBox = btn.parentElement.nextElementSibling;
+  if (replyBox) replyBox.classList.toggle("hidden");
+}
+
+
+
+async function deletePost(postId) {
+  if (!confirm("Are you sure you want to delete this blog?")) return;
+
+  try {
+    await fetch(`/api/v1/posts/${postId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    loadPosts(); // refresh list
+  } catch (err) {
+    alert("Failed to delete post");
+  }
+}
+
 function logout() {
-fetch("/api/v1/auth/logout", {
+  if (window.currentUserId) {
+    localStorage.removeItem(`profileImage_${window.currentUserId}`);
+  }
+
+  fetch("/api/v1/auth/logout", {
     method: "POST",
     credentials: "include"
   }).finally(() => {
-window.location.href = "index.html";
+    window.location.href = "index.html";
   });
 }
+
+function openImageModal(src) {
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+
+  modalImg.src = src;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+/*IMAGE VIEW MODAL  */
+
+function closeImageModal() {
+  const modal = document.getElementById("imageModal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+//deletion
+// ================= BLOG DELETE =================
+let postToDelete = null;
+
+function openPostDeleteModal(postId) {
+  postToDelete = postId;
+  document.getElementById("deleteModal").classList.remove("hidden");
+  document.getElementById("deleteModal").classList.add("flex");
+}
+
+function closePostDeleteModal() {
+  postToDelete = null;
+  document.getElementById("deleteModal").classList.add("hidden");
+  document.getElementById("deleteModal").classList.remove("flex");
+}
+
+async function confirmPostDelete() {
+  if (!postToDelete) return;
+
+  try {
+    await fetch(`/api/v1/posts/${postToDelete}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    closePostDeleteModal();
+    loadPosts();
+  } catch (err) {
+    alert("Failed to delete post");
+  }
+}
+
+let activePostId = null;
+
+function openComments(postId) {
+  activePostId = postId;
+
+  const modal = document.getElementById("commentsModal");
+  const container = document.getElementById("modalComments");
+
+  if (!modal || !container) {
+    console.error("Comments modal not found");
+    return;
+  }
+
+  modal.classList.remove("hidden");
+  container.innerHTML = `<p class="text-gray-400">Loading comments...</p>`;
+
+  loadComments(postId);
+}
+
+function closeComments() {
+  document.getElementById("commentsModal").classList.add("hidden");
+  document.getElementById("modalCommentInput").value = "";
+  activePostId = null;
+}
+async function submitModalComment() {
+  const input = document.getElementById("modalCommentInput");
+  const text = input.value.trim();
+  if (!text || !activePostId) return;
+
+  try {
+    const res = await fetch(`/api/v1/posts/${activePostId}/comment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ text }),
+    });
+
+    const data = await res.json();
+   input.value = "";
+// update cache
+const post = postCache.get(activePostId);
+post.comments.push(data.comment);
+postCache.set(activePostId, post);
+
+// update UI count instantly
+const countBtn = document.querySelector(
+  `button[onclick="openComments('${activePostId}')"]`
+);
+if (countBtn) {
+  countBtn.innerHTML = `💬 ${post.comments.length}`;
+}
+
+// render instantly
+renderSingleComment(data.comment);
+
+loadComments(activePostId, true);
+
+  } catch {
+    alert("Failed to add comment");
+  }
+}
+function renderSingleComment(c) {
+  const container = document.getElementById("modalComments");
+
+  const div = document.createElement("div");
+  div.className = "flex gap-3 items-start";
+
+  div.innerHTML = `
+    <div class="w-10 h-10 rounded-full
+                bg-gradient-to-br from-green-400 to-green-600
+                text-white flex items-center justify-center
+                font-bold shadow">
+${
+  c.user && c.user.name
+    ? c.user.name.charAt(0).toUpperCase()
+    : "?"
+}
+    </div>
+
+    <div class="flex-1">
+      <div class="bg-gray-100 dark:bg-[#020617]
+                  rounded-2xl px-4 py-3">
+<p class="text-sm font-bold">${c.user?.name || "Unknown"}</p>
+        <p class="text-sm mt-1">${c.text}</p>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(div);
+}
+
+async function loadComments(postId, silent = false) {
+  activePostId = postId;
+
+  const container = document.getElementById("modalComments");
+
+  if (!container) return;
+
+  // Skeleton loader (LinkedIn style)
+  if (!silent) {
+    container.innerHTML = skeletonComments();
+  }
+
+  // ⚡ FAST: use cache instead of refetching
+  let post = postCache.get(postId);
+
+if (!post) {
+  // 🔥 FORCE REFETCH ONCE
+  try {
+    const res = await fetch(`/api/v1/posts/${postId}`, {
+      credentials: "include",
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      post = data.post;
+      postCache.set(postId, post);
+    }
+  } catch {}
+}
+
+if (!post) {
+  container.innerHTML =
+    `<p class="text-sm text-gray-400 text-center">Failed to load comments</p>`;
+  return;
+}
+
+  container.innerHTML = post.comments.length
+    ? post.comments.map(renderCommentHTML).join("")
+    : `<p class="text-sm text-gray-400 text-center">No comments yet</p>`;
+}
+function renderCommentHTML(c) {
+  const commentUserId =
+    c.user && typeof c.user === "object"
+      ? String(c.user._id)
+      : String(c.user);
+
+  const isOwner = commentUserId === String(window.currentUserId);
+
+  // 🔥 show only first 3 replies unless expanded
+  const repliesToShow =
+    c.__expanded ? c.replies : (c.replies || []).slice(0, 3);
+
+  return `
+    <div class="flex gap-3 items-start group">
+
+      <!-- Avatar -->
+      <div class="w-10 h-10 rounded-full overflow-hidden
+            bg-green-500 text-white
+            flex items-center justify-center font-bold shadow">
+  ${
+    c.user?.profileImage
+      ? `<img src="${c.user.profileImage}"
+              class="w-full h-full object-cover" />`
+      : (c.user?.name
+          ? c.user.name.charAt(0).toUpperCase()
+          : "?")
+  }
+</div>
+
+
+      <!-- Comment content -->
+      <div class="flex-1">
+
+        <!-- Bubble -->
+        <div class="bg-gray-100 dark:bg-[#020617]
+                    rounded-2xl px-4 py-3">
+
+          <div class="flex items-center gap-2">
+  <p class="text-sm font-bold text-gray-900 dark:text-white">
+    ${typeof c.user === "object" && c.user?.name ? c.user.name : "Unknown"}
+  </p>
+
+  <span class="text-xs text-gray-400">
+    · ${timeAgo(c.createdAt)}
+  </span>
+</div>
+
+
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-1 leading-relaxed">
+            ${c.text}
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-6 mt-2 text-xs text-gray-400">
+
+          <button
+            onclick="toggleLikeComment('${activePostId}','${c._id}')"
+            class="flex items-center gap-1 hover:text-red-500 transition">
+            ❤️ <span id="comment-like-${c._id}">${c.likes?.length || 0}</span>
+          </button>
+
+          <button
+            onclick="toggleReplyBox('${c._id}')"
+            class="hover:text-green-500 transition">
+            💬 Reply
+          </button>
+
+          ${
+            isOwner
+              ? `<button
+                    onclick="openCommentDeleteModal('${activePostId}','${c._id}')"
+                    class="hover:text-red-600 transition">
+                    🗑️ Delete
+                 </button>`
+              : ""
+          }
+        </div>
+
+        <!-- Reply Input -->
+        <div id="reply-box-${c._id}" class="hidden mt-2 ml-12">
+          <input
+            id="reply-input-${c._id}"
+            placeholder="Write a reply..."
+            class="w-full text-sm border rounded-full px-4 py-1"
+          />
+          <button
+            onclick="submitReply('${activePostId}','${c._id}')"
+            class="mt-1 text-xs text-green-600 font-semibold">
+            Reply
+          </button>
+        </div>
+
+        <!-- ✅ REPLIES -->
+        ${
+          repliesToShow.length
+            ? `
+              <div class="ml-12 mt-3 space-y-3">
+                ${repliesToShow.map(r => {
+                  const replyUserId =
+                    r.user && typeof r.user === "object"
+                      ? String(r.user._id)
+                      : String(r.user);
+
+                  const isReplyOwner =
+                    replyUserId === String(window.currentUserId);
+
+                  return `
+                    <div class="flex gap-2">
+
+                      <div class="w-8 h-8 rounded-full overflow-hidden
+            bg-green-500 text-white
+            flex items-center justify-center text-sm font-bold">
+  ${
+    r.user?.profileImage
+      ? `<img src="${r.user.profileImage}"
+              class="w-full h-full object-cover" />`
+      : (r.user?.name
+          ? r.user.name.charAt(0).toUpperCase()
+          : "?")
+  }
+</div>
+
+
+                      <div class="flex-1">
+
+                        <div class="bg-gray-100 dark:bg-[#020617]
+                                    rounded-xl px-3 py-2 text-sm">
+
+                          <div class="flex items-center gap-2">
+                            <p class="font-semibold text-gray-900 dark:text-white">
+                              ${r.user?.name || "Unknown"}
+                            </p>
+                            <span class="text-xs text-gray-400">
+                              · ${timeAgo(r.createdAt)}
+                            </span>
+                          </div>
+
+                          <p class="text-gray-600 dark:text-gray-400">
+                            ${r.text}
+                          </p>
+                        </div>
+
+                        <div class="flex gap-4 mt-1 text-xs text-gray-400">
+
+                          <button
+                            onclick="toggleLikeReply(
+                              '${activePostId}',
+                              '${c._id}',
+                              '${r._id}'
+                            )"
+                            class="hover:text-red-500 transition">
+                            ❤️ <span id="reply-like-${r._id}">
+                              ${r.likes?.length || 0}
+                            </span>
+                          </button>
+
+                          ${
+                            isReplyOwner
+                              ? `<button
+                                  onclick="openReplyDeleteModal(
+                                    '${activePostId}',
+                                    '${c._id}',
+                                    '${r._id}'
+                                  )"
+                                  class="hover:text-red-600 transition">
+                                  🗑️ Delete
+                                </button>`
+                              : ""
+                          }
+
+                        </div>
+
+                      </div>
+                    </div>
+                  `;
+                }).join("")}
+
+                ${
+                  c.replies.length > 3
+                    ? `<button
+                        onclick="toggleReplies('${c._id}')"
+                        class="text-xs text-green-600 font-semibold">
+                        ${c.__expanded ? "Hide replies" : `View ${c.replies.length - 3} more replies`}
+                      </button>`
+                    : ""
+                }
+              </div>
+            `
+            : ""
+        }
+
+      </div>
+    </div>
+  `;
+}
+function toggleReplies(commentId) {
+  const post = postCache.get(activePostId);
+  if (!post) return;
+
+  const comment = post.comments.find(c => c._id === commentId);
+  if (!comment) return;
+
+  const container = document.getElementById("modalComments");
+
+  // replace replies with full list
+  comment.__expanded = !comment.__expanded;
+
+  if (comment.__expanded) {
+    comment.__oldReplies = comment.replies.slice();
+    loadComments(activePostId, true);
+  } else {
+    comment.replies = comment.__oldReplies || comment.replies;
+    loadComments(activePostId, true);
+  }
+}
+window.toggleReplies = toggleReplies;
+
+async function toggleLikeReply(postId, commentId, replyId) {
+  const countEl = document.getElementById(`reply-like-${replyId}`);
+  if (!countEl) return;
+
+  try {
+    const res = await fetch(
+      `/api/v1/posts/${postId}/comment/${commentId}/reply/${replyId}/like`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    const data = await res.json();
+    countEl.textContent = data.likesCount;
+
+    // 🔥 Update cache
+    const post = postCache.get(postId);
+    if (post) {
+      const comment = post.comments.find(c => c._id === commentId);
+      const reply = comment?.replies.find(r => r._id === replyId);
+      if (reply) {
+        reply.likes = Array(data.likesCount).fill("_");
+      }
+    }
+  } catch {
+    alert("Failed to like reply");
+  }
+}
+window.toggleLikeReply = toggleLikeReply;
+
+
+let pendingReplyDelete = {
+  postId: null,
+  commentId: null,
+  replyId: null,
+};
+
+function openReplyDeleteModal(postId, commentId, replyId) {
+  pendingReplyDelete = { postId, commentId, replyId };
+  document
+    .getElementById("deleteConfirmModal")
+    .classList.remove("hidden");
+}
+window.openReplyDeleteModal = openReplyDeleteModal;
+async function confirmDeleteReply() {
+  const { postId, commentId, replyId } = pendingReplyDelete;
+  if (!postId || !commentId || !replyId) return;
+
+  try {
+    const res = await fetch(
+      `/api/v1/posts/${postId}/comment/${commentId}/reply/${replyId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!res.ok) throw new Error();
+
+    // 🔥 Update cache
+    const post = postCache.get(postId);
+    if (post) {
+      const comment = post.comments.find(c => c._id === commentId);
+      if (comment) {
+        comment.replies = comment.replies.filter(
+          r => r._id !== replyId
+        );
+      }
+    }
+
+    pendingReplyDelete = { postId: null, commentId: null, replyId: null };
+    loadComments(postId, true);
+    closeCommentDeleteModal();
+  } catch {
+    alert("Failed to delete reply");
+  }
+}
+async function toggleSavePost(postId) {
+  try {
+    const res = await fetch(`/api/v1/posts/${postId}/save`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    const text = document.getElementById(`save-text-${postId}`);
+    const btn  = document.getElementById(`save-btn-${postId}`);
+
+    /* ================= SAVE ================= */
+    if (data.saved) {
+      if (!window.savedPostIds.includes(postId)) {
+        window.savedPostIds.push(postId);
+      }
+
+      window.savedPostMeta[postId] = Date.now();
+
+      if (text) {
+        text.innerHTML = `
+          <span class="inline-block text-xs mt-1
+            px-2 py-1 rounded-full
+            bg-green-100 text-green-700 font-semibold">
+            ✓ Saved · ${timeAgo(window.savedPostMeta[postId])}
+          </span>`;
+      }
+
+      // ✅ THIS IS THE PART YOU ASKED ABOUT
+      if (btn) {
+        btn.classList.add("saved", "animate");
+        setTimeout(() => btn.classList.remove("animate"), 350);
+      }
+
+      showSaveToast("Saved to bookmarks");
+    }
+
+    /* ================= UNSAVE ================= */
+    else {
+      window.savedPostIds = window.savedPostIds.filter(id => id !== postId);
+      delete window.savedPostMeta[postId];
+
+      if (text) text.innerHTML = "";
+
+      if (btn) btn.classList.remove("saved");
+
+      showSaveToast("Removed from bookmarks");
+
+      // remove instantly from Saved page
+      if (window.currentPage === "saved") {
+        const card = document.querySelector(
+          `[data-post-id="${postId}"]`
+        );
+        if (card) {
+          card.classList.add("fade-out");
+          setTimeout(() => card.remove(), 250);
+        }
+      }
+    }
+  } catch {
+    alert("Failed to save post");
+  }
+}
+
+window.toggleSavePost = toggleSavePost;
+
+
+
+
+function toggleReplyBox(commentId) {
+  const box = document.getElementById(`reply-box-${commentId}`);
+  if (box) box.classList.toggle("hidden");
+}
+window.toggleReplyBox = toggleReplyBox;
+
+async function submitReply(postId, commentId) {
+  const input = document.getElementById(`reply-input-${commentId}`);
+  const text = input.value.trim();
+  if (!text) return;
+
+  const res = await fetch(
+    `/api/v1/posts/${postId}/comment/${commentId}/reply`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ text }),
+    }
+  );
+
+  const data = await res.json();
+
+  const post = postCache.get(postId);
+  const comment = post.comments.find(c => c._id === commentId);
+  comment.replies = comment.replies || [];
+  comment.replies.push(data.reply);
+
+  loadComments(postId, true);
+  input.value = "";
+}
+window.submitReply = submitReply;
+function skeletonComments() {
+  return Array.from({ length: 4 }).map(() => `
+    <div class="flex gap-3 animate-pulse">
+      <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+      <div class="flex-1 space-y-2">
+        <div class="h-3 bg-gray-300 rounded w-1/4"></div>
+        <div class="h-3 bg-gray-300 rounded w-3/4"></div>
+      </div>
+    </div>
+  `).join("");
+}
+
+
+// ================= COMMENT DELETE =================
+let pendingCommentDelete = { postId: null, commentId: null };
+
+function openCommentDeleteModal(postId, commentId) {
+  pendingCommentDelete = { postId, commentId };
+  document.getElementById("deleteConfirmModal").classList.remove("hidden");
+}
+
+function closeCommentDeleteModal() {
+  pendingCommentDelete = { postId: null, commentId: null };
+  document.getElementById("deleteConfirmModal").classList.add("hidden");
+}
+function handleCommentsBackdrop(e) {
+  if (e.target.id === "commentsModal") {
+    closeComments();
+  }
+}
+window.handleCommentsBackdrop = handleCommentsBackdrop;
+
+async function confirmDeleteComment() {
+  const { postId, commentId } = pendingCommentDelete;
+  if (!postId || !commentId) return;
+
+  try {
+    const res = await fetch(
+      `/api/v1/posts/${postId}/comment/${commentId}`,
+      { method: "DELETE", credentials: "include" }
+    );
+
+    if (!res.ok) throw new Error();
+
+    //  REMOVE FROM CACHE
+    const post = postCache.get(postId);
+    if (post) {
+      post.comments = post.comments.filter(
+        c => c._id !== commentId
+      );
+    }
+
+    //  UPDATE COMMENT COUNT IN UI
+    const btn = document.querySelector(
+      `button[onclick="openComments('${postId}')"]`
+    );
+    if (btn && post) {
+      btn.innerHTML = `💬 ${post.comments.length}`;
+    }
+
+    closeCommentDeleteModal();
+    loadComments(postId, true); // silent re-render
+  } catch {
+    alert("Failed to delete comment");
+  }
+}
+
+   async function reactPost(postId, emoji) {
+  try {
+    const res = await fetch(`/api/v1/posts/${postId}/react`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ emoji })
+    });
+
+    if (!res.ok) throw new Error();
+
+    const data = await res.json();
+
+    // ✅ update cache with backend truth
+const existingPost = postCache.get(postId);
+if (!existingPost) return;
+
+// update ONLY reactions
+existingPost.reactions = data.post.reactions;
+
+// keep author + comments intact
+postCache.set(postId, existingPost);
+
+updateReactionUI(postId);
+
+
+    closeReactionBox(postId);
+  } catch {
+    alert("Reaction failed");
+  }
+}
+function updateReactionUI(postId) {
+  const post = postCache.get(postId);
+  if (!post) return;
+
+  const total =
+    post.reactions.like.length +
+    post.reactions.heart.length +
+    post.reactions.clap.length +
+    post.reactions.fire.length;
+
+  const totalEl = document.getElementById(`total-react-${postId}`);
+  const textEl = document.getElementById(`total-react-text-${postId}`);
+
+  if (totalEl) totalEl.textContent = total;
+  if (textEl) textEl.textContent = total === 1 ? "like" : "likes";
+}
+
+
+
+function rerenderPost(postId) {
+  const post = postCache.get(postId);
+  if (!post) return;
+
+  const container = document.getElementById("postsContainer");
+  const oldPost = container.querySelector(`[data-post-id="${postId}"]`);
+  if (!oldPost) return;
+
+  const temp = document.createElement("div");
+  temp.innerHTML = renderPost(post);
+
+  oldPost.replaceWith(temp.firstElementChild);
+}
+
+
+async function toggleLikeComment(postId, commentId) {
+  const countEl = document.getElementById(`comment-like-${commentId}`);
+  if (!countEl) return;
+
+  try {
+    const res = await fetch(
+      `/api/v1/posts/${postId}/comment/${commentId}/like`,
+      { method: "POST", credentials: "include" }
+    );
+
+    const data = await res.json();
+
+    countEl.textContent = data.likesCount;
+
+    // 🔥 UPDATE CACHE
+    const post = postCache.get(postId);
+    if (post) {
+      const comment = post.comments.find(c => c._id === commentId);
+      if (comment) {
+        comment.likes = Array(data.likesCount).fill("_");
+      }
+    }
+  } catch {
+    alert("Failed to like comment");
+  }
+}
+
+
+function toggleReactionBox(postId) {
+  const box = document.getElementById(`reaction-box-${postId}`);
+  if (!box) return;
+
+  const isOpen = !box.classList.contains("hidden");
+
+  // close all others
+  document.querySelectorAll("[id^='reaction-box-']")
+    .forEach(b => b.classList.add("hidden"));
+
+  // toggle current
+  if (!isOpen) {
+    box.classList.remove("hidden");
+  }
+}
+
+document.addEventListener("click", e => {
+  if (
+    e.target.closest("[id^='reaction-box-']") ||
+    e.target.closest("button[onclick^='toggleReactionBox']")
+  ) return;
+
+  document.querySelectorAll("[id^='reaction-box-']")
+    .forEach(b => b.classList.add("hidden"));
+});
+
+function closeReactionBox(postId) {
+  const box = document.getElementById(`reaction-box-${postId}`);
+  if (box) box.classList.add("hidden");
+}
+function renderReactionModal(post) {
+  const tabs = document.getElementById("reactionTabs");
+  const usersBox = document.getElementById("reactionUsers");
+
+  tabs.innerHTML = "";
+  usersBox.innerHTML = "";
+
+  const emojis = ["like", "heart", "clap", "fire"];
+  const emojiMap = {
+    like: "👍",
+    heart: "❤️",
+    clap: "👏",
+    fire: "🔥",
+  };
+
+  const total =
+    post.reactions.like.length +
+    post.reactions.heart.length +
+    post.reactions.clap.length +
+    post.reactions.fire.length;
+
+  // ✅ NO REACTIONS CASE
+  if (total === 0) {
+    usersBox.innerHTML = `
+      <p class="text-sm text-gray-500 text-center py-6">
+        No reactions yet
+      </p>
+    `;
+    return;
+  }
+
+  // ✅ BUILD TABS
+  emojis.forEach(type => {
+    const count = post.reactions[type].length;
+    if (count === 0) return;
+
+    const tab = document.createElement("button");
+    tab.textContent = `${emojiMap[type]} ${count}`;
+    tab.className =
+      "text-sm font-medium px-2 pb-1 border-b-2 border-transparent " +
+      "hover:text-green-600 cursor-pointer";
+
+    tab.onclick = () => renderReactionUsers(post, type);
+    tabs.appendChild(tab);
+  });
+
+  // ✅ SHOW FIRST NON-EMPTY TAB
+  const first = emojis.find(e => post.reactions[e].length > 0);
+  if (first) renderReactionUsers(post, first);
+}
+
+
+function renderReactionUsers(post, emoji) {
+  const usersBox = document.getElementById("reactionUsers");
+  usersBox.innerHTML = "";
+
+  const users = post.reactions[emoji];
+
+  // ✅ SAFETY: no users
+  if (!users || users.length === 0) {
+    usersBox.innerHTML = `
+      <p class="text-sm text-gray-500 text-center py-6">
+        No reactions yet
+      </p>
+    `;
+    return;
+  }
+
+  users.forEach(user => {
+    // ✅ SAFETY: handle unpopulated users
+    if (!user || !user.name) return;
+
+    const div = document.createElement("div");
+    div.className =
+      "flex items-center gap-3 px-2 py-2 rounded-lg " +
+      "hover:bg-gray-100 dark:hover:bg-[#020617]";
+
+    div.innerHTML = `
+      <div class="w-9 h-9 rounded-full overflow-hidden
+            bg-green-500 text-white
+            flex items-center justify-center font-bold">
+  ${
+    user.profileImage
+      ? `<img src="${user.profileImage}"
+              class="w-full h-full object-cover" />`
+      : user.name.charAt(0).toUpperCase()
+  }
+</div>
+
+      <div class="font-medium text-gray-900 dark:text-gray-100">
+        ${user.name}
+      </div>
+    `;
+
+    usersBox.appendChild(div);
+  });
+}
+
+function closeReactionModal() {
+  document.getElementById("reactionModal").classList.add("hidden");
+}
+function showSaveToast(message = "Saved to bookmarks") {
+  const toast = document.getElementById("saveToast");
+  if (!toast) return;
+
+  toast.textContent = `🔖 ${message}`;
+  toast.classList.remove("opacity-0");
+  toast.classList.add("opacity-100");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-100");
+    toast.classList.add("opacity-0");
+  }, 2000);
+}
+
+
+
+
+
+
+
+
+
 
 
 /* Default */
 (async function initApp() {
   const ok = await loadLoggedInUser();
   if (ok) {
-    navigate("home");
+    await navigate("blogs"); // 🔥 MUST load posts AFTER user
   }
 })();
+
+
+window.addEventListener("profileImageUpdated", e => {
+  console.log("PROFILE IMAGE EVENT RECEIVED:", e.detail);
+
+  const { profileImage, userId } = e.detail;
+
+  // Navbar avatar
+  const avatar = document.getElementById("profileAvatar");
+  if (avatar) {
+    avatar.innerHTML = `
+      <img src="${profileImage}"
+           class="w-full h-full rounded-full object-cover" />
+    `;
+  }
+
+  // Persist
+localStorage.setItem(
+  `profileImage_${userId}`,
+  profileImage
+);
+
+  // Update cache
+  postCache.forEach(post => {
+    if (String(post.author._id) === String(userId)) {
+      post.author.profileImage = profileImage;
+    }
+
+    post.comments.forEach(c => {
+      if (String(c.user._id) === String(userId)) {
+        c.user.profileImage = profileImage;
+      }
+
+      c.replies?.forEach(r => {
+        if (String(r.user._id) === String(userId)) {
+          r.user.profileImage = profileImage;
+        }
+      });
+    });
+  });
+
+  if (window.currentPage === "blogs") {
+    loadPosts();
+  }
+});
+
+
+
+function openUserProfile(userId) {
+  window.open(
+    `/public-profile.html?u=${userId}`,
+    "_blank"
+  );
+}
+
+window.openUserProfile = openUserProfile;
+
 
 window.toggleSidebar = toggleSidebar;
 window.toggleTheme = toggleTheme;
@@ -556,10 +2183,188 @@ window.navigate = navigate;
 window.logout = logout;
 window.createPost = createPost;
 window.loadPosts = loadPosts;
+window.updatePreview = updatePreview;
+window.openImageModal = openImageModal;
+window.closeImageModal = closeImageModal;
+window.deletePost = deletePost;
+window.openPostDeleteModal = openPostDeleteModal;
+window.closePostDeleteModal = closePostDeleteModal;
+window.confirmPostDelete = confirmPostDelete;
+window.toggleLike = toggleLike;
+window.addComment = addComment;
+window.toggleReply = toggleReply;
+window.openComments = openComments;
+window.closeComments = closeComments;
+window.submitModalComment = submitModalComment;
+window.loadComments = loadComments;
+window.openCommentDeleteModal = openCommentDeleteModal;
+window.closeCommentDeleteModal = closeCommentDeleteModal;
+window.confirmDeleteComment = confirmDeleteComment;
+window.reactPost = reactPost;
+window.toggleLikeComment = toggleLikeComment;
+window.toggleReactionBox = toggleReactionBox;
+window.openReactionSummary = openReactionSummary;
+window.closeReactionModal = closeReactionModal;
+
 
 
 </script>
 
+<!-- 🖼️ IMAGE VIEW MODAL -->
+<div
+  id="imageModal"
+  class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50"
+  onclick="closeImageModal()"
+>
+  <img
+    id="modalImage"
+    class="max-w-[90%] max-h-[90%] rounded-xl shadow-2xl"
+  />
+</div>
+<!-- 🗑️ DELETE CONFIRM MODAL -->
+<div
+  id="deleteModal"
+  class="fixed inset-0 hidden items-center justify-center bg-black/50 z-50"
+>
+  <div class="bg-white dark:bg-[#020617] rounded-2xl p-6 w-[90%] max-w-sm shadow-2xl">
+
+    <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+      Delete blog?
+    </h3>
+
+    <p class="text-gray-500 dark:text-gray-400 mb-6">
+      This action cannot be undone. The blog will be permanently removed.
+    </p>
+
+    <div class="flex justify-end gap-3">
+      <button
+        onclick="closePostDeleteModal()"
+        class="px-4 py-2 rounded-lg border
+               text-gray-600 dark:text-gray-300
+               hover:bg-gray-100 dark:hover:bg-[#020617]"
+      >
+        Cancel
+      </button>
+
+      <button
+        onclick="confirmPostDelete()"
+        class="px-4 py-2 rounded-lg
+               bg-red-500 hover:bg-red-600
+               text-white font-semibold"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+<!-- 💬 COMMENTS MODAL -->
+<div
+  id="commentsModal"
+  class="fixed inset-0 hidden z-50 bg-black/40 flex items-end md:items-center justify-center"
+  onclick="handleCommentsBackdrop(event)">
+  <div class="bg-white dark:bg-[#020617]
+              w-full md:max-w-lg
+              rounded-t-2xl md:rounded-2xl
+              shadow-xl
+              flex flex-col">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between p-4 border-b">
+      <h3 class="font-semibold">Comments</h3>
+      <button onclick="closeComments()" class="text-xl">&times;</button>
+    </div>
+
+    <!-- Comments list -->
+    <div
+      id="modalComments"
+      class="flex-1 overflow-y-auto p-4 space-y-4"
+      style="max-height: 60vh;"
+    ></div>
+
+    <!-- Add comment -->
+    <div class="border-t p-3 flex gap-2">
+      <input
+        id="modalCommentInput"
+        placeholder="Add a comment..."
+        class="flex-1 text-sm border rounded-full px-4 py-2"
+      />
+      <button
+        onclick="submitModalComment()"
+        class="px-4 py-2 rounded-full
+               bg-green-500 hover:bg-green-600
+               text-white text-sm font-semibold"
+      >
+        Post
+      </button>
+    </div>
+
+  </div>
+</div>
+<!-- 🗑️ DELETE CONFIRM MODAL -->
+<div
+  id="deleteConfirmModal"
+  class="fixed inset-0 hidden z-50 bg-black/40 flex items-center justify-center"
+  onclick="if(event.target.id==='deleteConfirmModal') closeCommentDeleteModal()">
+
+  <div class="bg-white dark:bg-[#020617]
+              rounded-2xl p-6 w-[90%] max-w-sm
+              shadow-xl">
+
+    <h3 class="text-lg font-semibold mb-2">
+      Delete comment?
+    </h3>
+
+    <p class="text-sm text-gray-500 mb-6">
+      This action cannot be undone.
+    </p>
+
+    <div class="flex justify-end gap-3">
+      <button
+        onclick="closeCommentDeleteModal()"
+        class="px-4 py-2 rounded-lg
+               border text-gray-500 hover:bg-gray-100">
+        Cancel
+      </button>
+
+      <button
+  onclick="confirmDeleteReply()"
+  class="px-4 py-2 rounded-lg
+         bg-red-500 hover:bg-red-600
+         text-white font-semibold">
+  Delete
+</button>
+
+    </div>
+
+  </div>
+</div>
+<div id="reactionModal"
+     class="fixed inset-0 bg-black/30 backdrop-blur-sm hidden z-[9999] flex items-center justify-center"
+
+     onclick="if(event.target.id==='reactionModal') closeReactionModal()">
+
+<div class="bg-white dark:bg-[#020617] text-gray-900 dark:text-gray-100
+            rounded-2xl w-full max-w-md p-5 shadow-2xl">
+
+    <!-- Tabs -->
+    <div id="reactionTabs" class="flex gap-4 border-b pb-2 mb-3"></div>
+
+    <!-- Users -->
+    <div id="reactionUsers" class="space-y-3 max-h-80 overflow-y-auto"></div>
+
+  </div>
+</div>
+<div
+  id="saveToast"
+  class="fixed bottom-6 left-1/2 -translate-x-1/2
+         bg-[#020617] text-white
+         px-5 py-3 rounded-full shadow-xl
+         flex items-center gap-2
+         opacity-0 pointer-events-none
+         transition-all duration-300 z-[9999]">
+
+  🔖 Saved to bookmarks
+</div>
 
 </body>
 </html>

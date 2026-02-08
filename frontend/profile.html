@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>SARC | My Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:
+    radial-gradient(900px 400px at 15% 10%, rgba(59,130,246,.18), transparent 60%),
+    radial-gradient(800px 500px at 85% 85%, rgba(16,185,129,.18), transparent 60%),
+    #020617;
+  overflow-x:hidden;
+}
+
+/* glass */
+.glass{
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.10),
+    rgba(255,255,255,.03)
+    
+  );
+  backdrop-filter:blur(26px) saturate(160%);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.55),
+    inset 0 0 40px rgba(255,255,255,.04);
+}
+
+/* floating */
+@keyframes float {
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-18px)}
+}
+.float{animation:float 16s ease-in-out infinite}
+
+/* scan */
+
+  .scan::after{
+  content:"";
+  position:absolute;
+  inset:-50%;
+  background:linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255,255,255,.08),
+    transparent 60%
+  );
+  animation:scan 6s linear infinite;
+  pointer-events:none; /* 🔥 THIS FIXES THE CLICKS */
+}
+.glass{
+  position:relative;
+}
+
+
+@keyframes scan{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(100%)}
+}
+
+/* shimmer */
+.shimmer{
+  background:linear-gradient(90deg,#fff,#60a5fa,#34d399,#fff);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shine 4s linear infinite;
+}
+@keyframes shine{to{background-position:200% center}}
+
+.input{
+  width:100%;
+  padding:.75rem 1rem;
+  border-radius:0.9rem;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  color:white;
+}
+.input:focus{
+  outline:none;
+  border-color:#60a5fa;
+  background:rgba(255,255,255,.08);
+}
+
+/* stats */
+.stat{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:1rem;
+  padding:1rem;
+}
+.stat-num{
+  font-size:1.5rem;
+  font-weight:800;
+}
+</style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center px-4 py-10">
+
+<!-- floating decor -->
+<div class="absolute inset-0 pointer-events-none hidden lg:block">
+  <div class="glass float absolute top-[14%] left-[8%] w-64 p-5 rounded-3xl">
+    <p class="text-sm font-bold text-blue-300">SARC Innovation</p>
+    <p class="text-xs text-gray-400">Engineering leadership</p>
+  </div>
+
+  <div class="glass float absolute bottom-[14%] right-[10%] w-60 p-5 rounded-3xl">
+    <p class="text-sm font-bold text-emerald-300">NIT Agartala</p>
+    <p class="text-xs text-gray-400">Student Council</p>
+  </div>
+</div>
+
+<!-- MAIN CARD -->
+<div class="relative z-10 w-full max-w-md sm:max-w-lg">
+  <div class="glass scan rounded-[2rem] px-6 py-7 text-center">
+
+    <!-- header -->
+    <div class="flex flex-col items-center gap-3 mb-6">
+      <img src="assets/logo 2.jpeg" class="w-11 h-11 object-contain">
+      <h1 class="text-3xl font-black shimmer">SARC PORTAL</h1>
+      <p class="text-[10px] tracking-[0.4em] uppercase text-gray-400">
+        Profile Editor
+      </p>
+    </div>
+
+    <!-- avatar -->
+    <div class="relative mx-auto mb-5 w-28 h-28">
+      <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-500 to-emerald-400 blur-xl opacity-70"></div>
+      <div id="avatarPreview"
+        class="relative w-full h-full rounded-full bg-[#020617]
+               border-4 border-[#020617]
+               overflow-hidden flex items-center justify-center">
+        <span id="avatarFallback" class="text-6xl text-white/10">?</span>
+      </div>
+    </div>
+
+    <!-- upload -->
+    <label class="block cursor-pointer mb-5">
+      <input id="profileImageInput" type="file" accept="image/*" class="hidden">
+      <div class="input text-sm font-semibold text-gray-300 hover:border-blue-400 transition">
+        Select profile image
+      </div>
+    </label>
+
+    <!-- stats -->
+    <div class="grid grid-cols-2 gap-4 mb-6">
+      <div class="stat">
+        <p class="stat-num text-blue-400" id="statBlogs">0</p>
+        <p class="text-xs text-gray-400 mt-1">Blogs Written</p>
+      </div>
+      <div class="stat">
+        <p class="stat-num text-emerald-400" id="statBookmarks">0</p>
+        <p class="text-xs text-gray-400 mt-1">Bookmarks</p>
+      </div>
+    </div>
+
+    <!-- editor -->
+    <div class="space-y-3 text-left">
+      <input id="nameInput" class="input" placeholder="Full Name">
+      <textarea id="bioInput" maxlength="160" rows="3"
+        class="input resize-none" placeholder="Bio (max 160 chars)"></textarea>
+      <input id="deptInput" class="input" placeholder="Department / Branch">
+      <input id="gradInput" type="number" class="input" placeholder="Graduation Year">
+    </div>
+
+    <!-- actions -->
+    <div class="mt-6 space-y-3">
+      <button onclick="handleSaveProfile()"
+        class="w-full py-3 rounded-xl
+               bg-gradient-to-r from-blue-500 to-emerald-500
+               text-white font-bold tracking-wide
+               hover:opacity-90 active:scale-95 transition">
+        Save Changes
+      </button>
+
+      <button onclick="openPublicProfile()"
+        class="text-sm font-semibold text-emerald-400 hover:underline">
+        View public profile →
+      </button>
+    </div>
+
+    <!-- footer -->
+    <div class="mt-5 flex justify-between text-[10px] text-gray-500 uppercase">
+      <span>SARC • NITA</span>
+      <span class="text-emerald-400 flex items-center gap-1">
+        <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></span>
+        Secure
+      </span>
+    </div>
+
+  </div>
+</div>
+
+<!-- toast -->
+<div id="profileToast"
+  class="fixed top-6 right-6 bg-gradient-to-r from-emerald-500 to-green-600
+         text-white px-6 py-4 rounded-2xl shadow-2xl
+         opacity-0 translate-y-4 transition-all duration-300 z-50">
+</div>
+
+<script type="module" src="./js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SARC | Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #fafafa;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.05) 0px, transparent 50%);
+      color: #0f172a;
+    }
+
+    .premium-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+    }
+
+    .nav-button {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-content {
+      animation: fadeInScale 0.4s ease-out;
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: translateY(10px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .input-premium {
+      background: rgba(248, 250, 252, 0.8);
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s ease;
+    }
+
+    .input-premium:focus {
+      background: #fff;
+      border-color: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen selection:bg-emerald-100 selection:text-emerald-900">
+
+<header class="sticky top-0 z-50 border-b border-slate-200/60 bg-white/70 backdrop-blur-md">
+  <div class="max-w-6xl mx-auto px-8 h-20 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+  <div class="group relative">
+    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-500 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+    <img
+      src="assets/logo 2.jpeg"
+      alt="SARC"
+      class="relative w-10 h-10 rounded-full bg-white object-contain shadow-sm"
+    />
+  </div>
+
+  <span class="text-lg font-bold tracking-tight text-slate-900 uppercase">
+    SARC
+  </span>
+</div>
+
+
+    <button
+      onclick="goBack()"
+      class="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-emerald-600 transition-colors">
+      <span class="group-hover:-translate-x-1 transition-transform">←</span> Return
+    </button>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-8 py-16">
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+    <aside class="lg:col-span-3">
+      <nav class="space-y-1">
+        <button
+          onclick="switchTab('about')"
+          id="tab-about"
+          class="nav-button w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold tracking-wide bg-white shadow-sm border border-slate-200 text-emerald-600">
+          About SARC
+        </button>
+
+        <button
+          onclick="switchTab('support')"
+          id="tab-support"
+          class="nav-button w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold tracking-wide text-slate-500 hover:bg-white/50">
+          Support Center
+        </button>
+      </nav>
+      
+      <div class="mt-12 p-6 rounded-3xl bg-slate-900 text-white overflow-hidden relative">
+        <div class="relative z-10">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-2">Build v2.4</p>
+          <p class="text-xs text-slate-400 leading-relaxed">Everything is up to date. You're using the latest SARC experience.</p>
+        </div>
+        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl"></div>
+      </div>
+    </aside>
+
+    <section class="lg:col-span-9">
+
+      <div id="about" class="tab-content">
+        <div class="mb-12">
+          <h2 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-4">Empowering the next generation of researchers.</h2>
+          <p class="text-lg text-slate-500 font-light leading-relaxed">
+            SARC is more than a portal—it's a digital ecosystem engineered for academic excellence and collaborative breakthrough.
+          </p>
+        </div>
+
+        <div class="premium-card rounded-[2rem] p-1 shadow-sm border border-slate-200/50">
+           <div class="bg-white rounded-[1.8rem] p-10">
+              <p class="text-slate-600 leading-relaxed mb-8">
+                The platform enables members to publish blogs, share research insights, interact through discussions, and build a verified academic identity within the institute ecosystem.
+              </p>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-8 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors group">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                  </div>
+                  <h4 class="font-bold text-slate-900 mb-2">Knowledge</h4>
+                  <p class="text-xs text-slate-500 leading-relaxed">Publish research & peer-reviewed blogs.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl border border-slate-100 hover:border-blue-200 transition-colors group">
+                  <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                  </div>
+                  <h4 class="font-bold text-slate-900 mb-2">Verified</h4>
+                  <p class="text-xs text-slate-500 leading-relaxed">Exclusive access for institute members.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl border border-slate-100 hover:border-purple-200 transition-colors group">
+                  <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                  </div>
+                  <h4 class="font-bold text-slate-900 mb-2">Network</h4>
+                  <p class="text-xs text-slate-500 leading-relaxed">Connect with alumni & faculty experts.</p>
+                </div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      <div id="support" class="tab-content hidden">
+        <div class="mb-12">
+          <h2 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-4">Concierge Support.</h2>
+          <p class="text-lg text-slate-500 font-light leading-relaxed">
+            Need assistance? Our specialized team ensures your experience remains seamless.
+          </p>
+        </div>
+
+        <div class="premium-card rounded-[2rem] p-10">
+<form class="space-y-8 max-w-2xl" onsubmit="submitFeedback(event)">
+            <div class="grid grid-cols-1 gap-8">
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-3">Email Address</label>
+                <input id="feedbackEmail"
+                  type="email"
+                  placeholder="name@institute.edu"
+                  class="input-premium w-full px-5 py-4 rounded-2xl outline-none text-sm font-medium"
+                  required
+                />
+              </div>
+
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-3">Your Message</label>
+                <textarea id="feedbackMessage"
+                  rows="4"
+                  placeholder="How can we help you today?"
+                  class="input-premium w-full px-5 py-4 rounded-2xl outline-none text-sm font-medium resize-none"
+                  required></textarea>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-4">
+              <button
+                type="submit"
+                class="px-10 py-4 rounded-2xl bg-slate-900 text-white text-xs font-bold uppercase tracking-widest hover:bg-emerald-600 hover:shadow-lg hover:shadow-emerald-200 transition-all active:scale-95">
+                Send Inquiry
+              </button>
+
+              <div class="text-right">
+                <p class="text-[10px] font-bold text-slate-300 uppercase tracking-tighter">Direct Contact</p>
+                <p class="text-sm font-semibold text-slate-900">support@sarc.edu</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</main>
+
+<script>
+function goBack() {
+  window.location.href = "app.html";
+}
+
+function switchTab(tab) {
+  // Hide all
+  document.getElementById("about").classList.add("hidden");
+  document.getElementById("support").classList.add("hidden");
+
+  // Reset Nav Styles
+  const tabs = ['about', 'support'];
+  tabs.forEach(t => {
+    const el = document.getElementById("tab-" + t);
+    el.classList.remove("bg-white", "shadow-sm", "border-slate-200", "text-emerald-600");
+    el.classList.add("text-slate-500", "hover:bg-white/50");
+  });
+
+  // Active Tab Style
+  document.getElementById(tab).classList.remove("hidden");
+  const activeNav = document.getElementById("tab-" + tab);
+  activeNav.classList.remove("text-slate-500", "hover:bg-white/50");
+  activeNav.classList.add("bg-white", "shadow-sm", "border-slate-200", "text-emerald-600");
+}
+
+</script>
+<script type="module">
+import { apiFetch } from "./js/api.js";
+
+function showToast(message, isError = false) {
+  const toast = document.getElementById("feedbackToast");
+
+  toast.textContent = message;
+
+  toast.className =
+    `fixed bottom-6 right-6 z-[9999]
+     px-6 py-4 rounded-2xl
+     backdrop-blur-xl
+     shadow-xl
+     text-sm font-semibold
+     transition-all duration-500
+     ${isError
+       ? "bg-red-50 border border-red-200 text-red-600"
+       : "bg-white/80 border border-emerald-200 text-emerald-700"
+     }`;
+
+  toast.classList.remove("opacity-0", "translate-y-4");
+  toast.classList.add("opacity-100", "translate-y-0");
+
+  setTimeout(() => {
+    toast.classList.remove("opacity-100");
+    toast.classList.add("opacity-0", "translate-y-4");
+  }, 2500);
+}
+
+window.submitFeedback = async function (e) {
+  e.preventDefault();
+
+  const email = document.getElementById("feedbackEmail").value.trim();
+  const message = document.getElementById("feedbackMessage").value.trim();
+
+  if (!email || !message) {
+    showToast("Please fill all fields", true);
+    return;
+  }
+
+  try {
+    await apiFetch("/api/v1/feedback", {
+      method: "POST",
+      body: JSON.stringify({ email, message })
+    });
+
+    showToast("✅ Inquiry sent successfully");
+
+    document.getElementById("feedbackMessage").value = "";
+
+  } catch (err) {
+    showToast(err.message || "Failed to send inquiry", true);
+  }
+};
+</script>
+
+<!-- ✅ FEEDBACK TOAST -->
+<div
+  id="feedbackToast"
+  class="fixed bottom-6 right-6 z-[9999]
+         px-6 py-4 rounded-2xl
+         bg-white/80 backdrop-blur-xl
+         border border-emerald-200
+         shadow-xl
+         text-sm font-semibold text-emerald-700
+         opacity-0 translate-y-4
+         pointer-events-none
+         transition-all duration-500">
+  ✅ Inquiry sent successfully
+</div>
+
+</body>
+</html>
